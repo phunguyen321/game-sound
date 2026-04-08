@@ -10,25 +10,34 @@ import { CommonModule } from '@angular/common';
 })
 export class PlaySound implements OnInit {
   animals: Animal[] = [
-    { id: 'duck', name: 'Vịt', image: '/images/duck.jpg', sound: '/sounds/duck.mp3' },
-    // { id: 'chicken', name: 'Gà', image: '/images/chicken.png', sound: '/sounds/chicken.mp3'  
-    // { id: 'bird', name: 'Chó', image: '/images/bird.png', sound: '/sounds/bird.mp3' }
+    { id: 'duck', name: 'Vịt', image: '/images/duck.png', sound: '/sounds/duck.mp3' },
+    { id: 'chicken', name: 'Gà', image: '/images/chicken.png', sound: '/sounds/chicken.mp3' },
+    { id: 'bird', name: 'Chim', image: '/images/bird.png', sound: '/sounds/bird.mp3' }
   ];
 
-  // Lưu trữ instance của âm thanh đang phát để có thể dừng lại nếu bé bấm liên tục
-  currentAudio: HTMLAudioElement | null = null;
   audios: Record<string, HTMLAudioElement> = {};
+  currentPlaying: string | null = null;
 
   ngOnInit(): void {
     this.animals.forEach(a => {
-      this.audios[a.name] = new Audio(a.sound);
+      this.audios[a.id] = new Audio(a.sound);
     });
   }
-  playSound(soundPath: string) {
-    const audio = this.audios[soundPath];
-    if (audio) {
-      audio.currentTime = 0;
-      audio.play();
+
+
+  playSound(id: string) {
+    const audio = this.audios[id];
+    if (!audio) return;
+
+    // pause audio đang phát
+    if (this.currentPlaying && this.currentPlaying !== id) {
+      this.audios[this.currentPlaying].pause();
     }
+
+    // reset + play
+    audio.currentTime = 0;
+    audio.play();
+
+    this.currentPlaying = id;
   }
 }

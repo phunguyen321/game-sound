@@ -1,43 +1,73 @@
 .sound-board {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  height: 100vh; /* Phủ kín màn hình */
-  background-color: #f0f8ff; /* Màu nền nhẹ dịu */
-  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  padding: 30px;
+  height: 100vh;
+  box-sizing: border-box;
+  background: linear-gradient(to bottom, #a1c4fd, #c2e9fb);
 }
 
 .animal-card {
-  width: 30%;
-  max-width: 250px;
+  min-height: 350px;
   background: white;
-  border-radius: 24px; /* Bo góc tròn trịa an toàn */
+  border-radius: 40px;
   padding: 20px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  text-align: center;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
   cursor: pointer;
 
-  /* Hiệu ứng mượt mà khi tương tác */
   transition:
-    transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275),
-    box-shadow 0.2s;
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
 
-  /* Chống bôi đen (highlight) khi bé chạm liên tục trên iPad */
   user-select: none;
   -webkit-tap-highlight-color: transparent;
 }
 
 .animal-card:active {
-  /* Hiệu ứng lún xuống khi bé chạm vào */
-  transform: scale(0.9);
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  transform: scale(0.92);
+  background: #fff7cc;
+}
+
+.animal-card.active {
+  border: 6px solid orange;
 }
 
 .animal-img {
-  width: 100%;
+  width: 80%;
+  max-width: 260px;
   height: auto;
   object-fit: contain;
-  /* Thêm animation rung lắc nhẹ nếu muốn sinh động hơn */
+}
+
+.animal-name {
+  font-size: 60px;
+  font-weight: bold;
+  color: #333;
+}
+
+@media (max-width: 768px) {
+  .sound-board {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .sound-board {
+    grid-template-columns: 1fr;
+  }
+}
+
+.animal-card:hover {
+  transform: translateY(-5px);
+}
+
+.animal-card:active .animal-img {
+  transform: rotate(-5deg) scale(1.1);
 }

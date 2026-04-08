@@ -1,7 +1,15 @@
 <div class="sound-board">
-  @for (animal of animals; track animal) {
-    <div class="animal-card" (click)="playSound(animal.name)">
+  @for (animal of animals; track animal.id) {
+    <div
+      class="animal-card"
+      (click)="playSound(animal.id)"
+      [class.active]="currentPlaying === animal.id"
+    >
       <img [src]="animal.image" [alt]="animal.name" class="animal-img" />
+
+      <div class="animal-name">
+        {{ animal.name }}
+      </div>
     </div>
   }
 </div>
