@@ -1,0 +1,7 @@
+<div class="sound-board">
+  @for (animal of animals; track animal) {
+    <div class="animal-card" (click)="playSound(animal.name)">
+      <img [src]="animal.image" [alt]="animal.name" class="animal-img" />
+    </div>
+  }
+</div>
