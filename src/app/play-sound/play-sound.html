@@ -1,15 +1,19 @@
-<div class="sound-board">
-  @for (animal of animals; track animal.id) {
-    <div
-      class="animal-card"
-      (click)="playSound(animal.id)"
-      [class.active]="currentPlaying === animal.id"
-    >
-      <img [src]="animal.image" [alt]="animal.name" class="animal-img" />
+<div
+  class="flashcard-container"
+  (touchstart)="onTouchStart($event)"
+  (touchmove)="onTouchMove($event)"
+  (touchend)="onTouchEnd()"
+>
+  <div
+    class="flashcard"
+    [style.transform]="transformStyle"
+    [class.touching]="isTouching"
+    (click)="onTap()"
+  >
+    <img [src]="currentAnimal.image" [alt]="currentAnimal.name" class="animal-img" />
 
-      <div class="animal-name">
-        {{ animal.name }}
-      </div>
+    <div class="animal-name">
+      {{ currentAnimal.name }}
     </div>
-  }
+  </div>
 </div>

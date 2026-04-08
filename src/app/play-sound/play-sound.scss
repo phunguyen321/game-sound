@@ -46,12 +46,6 @@
   object-fit: contain;
 }
 
-.animal-name {
-  font-size: 60px;
-  font-weight: bold;
-  color: #333;
-}
-
 @media (max-width: 768px) {
   .sound-board {
     grid-template-columns: repeat(2, 1fr);
@@ -70,4 +64,126 @@
 
 .animal-card:active .animal-img {
   transform: rotate(-5deg) scale(1.1);
+}
+
+.flashcard {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  background: linear-gradient(to bottom, #a1c4fd, #c2e9fb);
+
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+
+  transition: transform 0.2s ease;
+}
+
+.flashcard:active {
+  transform: scale(0.95);
+}
+
+.animal-img {
+  width: 65%;
+  max-width: 420px;
+  height: auto;
+  object-fit: contain;
+
+  transition: transform 0.2s ease;
+}
+
+.flashcard:active .animal-img {
+  transform: scale(1.1) rotate(-5deg);
+}
+
+.animal-name {
+  font-size: 80px;
+  font-weight: bold;
+  color: #333;
+  font-family: 'Baloo 2', cursive;
+}
+
+.flashcard-container {
+  overflow: hidden;
+  height: 100vh;
+  width: 100%;
+  background: linear-gradient(to bottom, #a1c4fd, #c2e9fb);
+}
+
+.flashcard {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  transition:
+    transform 0.35s ease,
+    opacity 0.35s ease;
+}
+
+.slide-left {
+  transform: translateX(-100%);
+  opacity: 0;
+}
+
+.slide-right {
+  transform: translateX(100%);
+  opacity: 0;
+}
+
+.touching {
+  transform: scale(0.92);
+  background: rgba(255, 255, 255, 0.4);
+}
+.touching .animal-img {
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 20px orange);
+}
+
+.animal-img {
+  width: 65%;
+  max-width: 420px;
+  transition: transform 0.2s ease;
+}
+
+.flashcard-container {
+  overflow: hidden;
+  height: 100vh;
+  width: 100%;
+  background: linear-gradient(to bottom, #a1c4fd, #c2e9fb);
+}
+
+.flashcard {
+  height: 100%;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  transition: transform 0.25s ease;
+}
+
+.flashcard.dragging {
+  transition: none;
+}
+
+.touching {
+  transform: scale(0.92);
+}
+
+.touching .animal-img {
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 20px orange);
+}
+
+.animal-img {
+  width: 65%;
+  max-width: 420px;
 }
