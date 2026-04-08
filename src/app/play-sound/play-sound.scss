@@ -39,13 +39,6 @@
   border: 6px solid orange;
 }
 
-.animal-img {
-  width: 80%;
-  max-width: 260px;
-  height: auto;
-  object-fit: contain;
-}
-
 @media (max-width: 768px) {
   .sound-board {
     grid-template-columns: repeat(2, 1fr);
@@ -87,11 +80,10 @@
 }
 
 .animal-img {
-  width: 65%;
-  max-width: 420px;
+  width: 80%;
+  max-width: 500px;
   height: auto;
   object-fit: contain;
-
   transition: transform 0.2s ease;
 }
 
@@ -145,12 +137,6 @@
   filter: drop-shadow(0 0 20px orange);
 }
 
-.animal-img {
-  width: 65%;
-  max-width: 420px;
-  transition: transform 0.2s ease;
-}
-
 .flashcard-container {
   overflow: hidden;
   height: 100vh;
@@ -181,9 +167,4 @@
 .touching .animal-img {
   transform: scale(1.1);
   filter: drop-shadow(0 0 20px orange);
-}
-
-.animal-img {
-  width: 65%;
-  max-width: 420px;
 }
