@@ -11,8 +11,8 @@ import { CommonModule } from '@angular/common';
 export class PlaySound implements OnInit {
   animals: Animal[] = [
     { id: 'duck', name: 'Vịt', image: '/images/duck.jpg', sound: '/sounds/duck.mp3' },
-    // { id: 'chicken', name: 'Gà', image: '/images/chicken.png', sound: '/sounds/chicken.mp3' },
-    // { id: 'dog', name: 'Chó', image: '/images/dog.png', sound: '/sounds/dog.mp3' }
+    // { id: 'chicken', name: 'Gà', image: '/images/chicken.png', sound: '/sounds/chicken.mp3'  
+    // { id: 'bird', name: 'Chó', image: '/images/bird.png', sound: '/sounds/bird.mp3' }
   ];
 
   // Lưu trữ instance của âm thanh đang phát để có thể dừng lại nếu bé bấm liên tục
