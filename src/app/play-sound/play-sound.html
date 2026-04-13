@@ -3,18 +3,20 @@
   (touchstart)="onTouchStart($event)"
   (touchmove)="onTouchMove($event)"
   (touchend)="onTouchEnd()"
+  (mousedown)="onMouseDown($event)"
+  (mousemove)="onMouseMove($event)"
+  (mouseup)="onMouseUp()"
+  (mouseleave)="onMouseLeave()"
 >
   <div
     class="flashcard"
-    [style.transform]="transformStyle"
-    [class.touching]="isTouching"
-    [class.paused]="currentPlaying === currentAnimal.id && audios[currentAnimal.id]?.paused"
-    [class.playing]="currentPlaying === currentAnimal.id && !audios[currentAnimal.id]?.paused"
+    [style.transform]="transformStyle()"
+    [class.touching]="isTouching()"
+    [class.paused]="audioState() === 'paused'"
+    [class.playing]="audioState() === 'playing'"
   >
-    <img [src]="currentAnimal.image" [alt]="currentAnimal.name" class="animal-img" />
+    <img [src]="currentAnimal().image" [alt]="currentAnimal().name" class="animal-img" />
 
-    <div class="animal-name">
-      {{ currentAnimal.name }}
-    </div>
+    <div class="animal-name">{{ currentAnimal().name }}</div>
   </div>
 </div>
