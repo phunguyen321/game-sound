@@ -8,7 +8,8 @@
     class="flashcard"
     [style.transform]="transformStyle"
     [class.touching]="isTouching"
-    (click)="onTap()"
+    [class.paused]="currentPlaying === currentAnimal.id && audios[currentAnimal.id]?.paused"
+    [class.playing]="currentPlaying === currentAnimal.id && !audios[currentAnimal.id]?.paused"
   >
     <img [src]="currentAnimal.image" [alt]="currentAnimal.name" class="animal-img" />
 

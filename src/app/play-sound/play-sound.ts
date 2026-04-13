@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { Animal } from '../model/animal.model';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-play-sound',
+  standalone: true,
   imports: [CommonModule],
   templateUrl: './play-sound.html',
   styleUrl: './play-sound.scss',
 })
 export class PlaySound implements OnInit {
-
   animals = [
     { id: 'duck', name: 'Vịt', image: '/images/duck.png', sound: '/sounds/duck.mp3' },
     { id: 'chicken', name: 'Gà', image: '/images/chicken.png', sound: '/sounds/chicken.mp3' },
@@ -21,16 +20,26 @@ export class PlaySound implements OnInit {
 
   currentIndex = 0;
 
-  // 👇 swipe state
+  // swipe
   startX = 0;
   currentX = 0;
-  isDragging = false;
 
+  // UI
   isTouching = false;
+
+  tapThreshold = 10;
 
   ngOnInit() {
     this.animals.forEach(a => {
-      this.audios[a.id] = new Audio(a.sound);
+      const audio = new Audio(a.sound);
+
+      audio.onended = () => {
+        if (this.currentPlaying === a.id) {
+          this.currentPlaying = null;
+        }
+      };
+
+      this.audios[a.id] = audio;
     });
   }
 
@@ -42,35 +51,51 @@ export class PlaySound implements OnInit {
     return `translateX(${this.currentX}px)`;
   }
 
+
   playSound(id: string) {
     const audio = this.audios[id];
     if (!audio) return;
 
-    if (this.currentPlaying && this.currentPlaying !== id) {
-      this.audios[this.currentPlaying].pause();
+    if (this.currentPlaying === id) {
+      if (!audio.paused) {
+        audio.pause();
+      } else {
+        audio.play();
+      }
+      return;
     }
+
+
+    if (this.currentPlaying) {
+      const currentAudio = this.audios[this.currentPlaying];
+      currentAudio.pause();
+      currentAudio.currentTime = 0;
+    }
+
 
     audio.currentTime = 0;
     audio.play();
     this.currentPlaying = id;
   }
 
-  // 👆 TAP
-  onTap() {
-    if (this.isDragging) return; // tránh conflict
 
+  handleTap() {
     this.isTouching = true;
+
     this.playSound(this.currentAnimal.id);
+
+    if (navigator.vibrate) {
+      navigator.vibrate(30);
+    }
 
     setTimeout(() => {
       this.isTouching = false;
-    }, 200);
+    }, 150);
   }
 
-  // 👉 SWIPE REALTIME
+
   onTouchStart(event: TouchEvent) {
     this.startX = event.touches[0].clientX;
-    this.isDragging = true;
   }
 
   onTouchMove(event: TouchEvent) {
@@ -79,27 +104,33 @@ export class PlaySound implements OnInit {
   }
 
   onTouchEnd() {
-    this.isDragging = false;
+    const moved = Math.abs(this.currentX);
 
-    const threshold = 80;
+    // TAP
+    if (moved < this.tapThreshold) {
+      this.handleTap();
+    }
+    // SWIPE
+    else {
+      const threshold = 80;
 
-    if (this.currentX > threshold) {
-      this.prev();
-    } else if (this.currentX < -threshold) {
-      this.next();
+      if (this.currentX > threshold) {
+        this.prev();
+      } else if (this.currentX < -threshold) {
+        this.next();
+      }
     }
 
-    // reset về giữa
     this.currentX = 0;
   }
 
   next() {
-    this.stopCurrentAudio()
+    this.stopCurrentAudio();
     this.currentIndex = (this.currentIndex + 1) % this.animals.length;
   }
 
   prev() {
-    this.stopCurrentAudio()
+    this.stopCurrentAudio();
     this.currentIndex =
       (this.currentIndex - 1 + this.animals.length) % this.animals.length;
   }
