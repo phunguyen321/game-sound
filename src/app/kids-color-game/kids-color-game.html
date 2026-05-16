@@ -8,14 +8,23 @@
   (mouseup)="onMouseUp()"
   (mouseleave)="onMouseLeave()"
 >
-  <div
-    class="flashcard"
-    [style.background]="currentColor().hex"
-    [style.transform]="transformStyle()"
-    [class.touching]="isTouching()"
-  >
-    <div class="color-text">
-      {{ currentColor().label }}
+  <div class="flashcard">
+    <div
+      class="color-box left"
+      [style.background]="leftColor().hex"
+      (click)="pickColor('left')"
+      [class.selected]="selectedSide() === 'left'"
+    >
+      <div class="label">{{ leftColor().label }}</div>
+    </div>
+
+    <div
+      class="color-box right"
+      [style.background]="rightColor().hex"
+      (click)="pickColor('right')"
+      [class.selected]="selectedSide() === 'right'"
+    >
+      <div class="label">{{ rightColor().label }}</div>
     </div>
   </div>
 </div>

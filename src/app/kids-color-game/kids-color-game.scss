@@ -6,8 +6,6 @@
   justify-content: center;
   align-items: center;
 
-  overflow: hidden;
-
   background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #fbc2eb, #a18cd1, #84fab0, #8fd3f4);
 
   background-size: 400% 400%;
@@ -26,56 +24,65 @@
   }
 }
 
+/* CARD */
 .flashcard {
-  width: 320px;
+  width: 360px;
   height: 420px;
 
-  border-radius: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+
+  padding: 18px;
+
+  border-radius: 32px;
+
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(10px);
+
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+}
+
+/* 2 BOX RIÊNG BIỆT */
+.color-box {
+  flex: 1;
+
+  border-radius: 22px;
 
   display: flex;
   justify-content: center;
   align-items: center;
 
-  user-select: none;
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    filter 0.2s ease;
+
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* hover nhẹ */
+.color-box:hover {
+  transform: scale(1.02);
+}
+
+/* 👆 SELECTED EFFECT (FOCUS NHẸ) */
+.color-box.selected {
+  transform: scale(1.08);
 
   box-shadow:
-    0 20px 50px rgba(0, 0, 0, 0.25),
-    inset 0 -10px 20px rgba(255, 255, 255, 0.2);
+    0 0 0 5px rgba(255, 255, 255, 0.6),
+    0 20px 40px rgba(0, 0, 0, 0.3);
 
-  border: 6px solid rgba(255, 255, 255, 0.4);
-
-  transition: transform 0.15s ease;
-
-  will-change: transform;
+  filter: brightness(1.1);
 }
 
-.color-text {
-  font-size: 64px;
+/* LABEL */
+.label {
+  font-size: 28px;
   font-weight: bold;
-
   color: white;
-
-  text-shadow:
-    0 0 10px rgba(0, 0, 0, 0.3),
-    0 0 20px rgba(0, 0, 0, 0.3);
-
-  animation: pop 1.5s infinite;
-}
-
-.flashcard.touching {
-  animation: pop 200ms ease;
-}
-
-@keyframes pop {
-  0% {
-    transform: scale(1);
-  }
-
-  50% {
-    transform: scale(1.08);
-  }
-
-  100% {
-    transform: scale(1);
-  }
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
 }

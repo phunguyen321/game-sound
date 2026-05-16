@@ -1,4 +1,4 @@
-import { Component, computed, signal, inject, DestroyRef } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 interface ColorItem {
@@ -7,6 +7,8 @@ interface ColorItem {
   hex: string;
   sound: string;
 }
+
+type Side = 'left' | 'right';
 
 @Component({
   selector: 'app-kids-color-game',
@@ -17,155 +19,127 @@ interface ColorItem {
 })
 export class KidsColorGame {
 
-  private destroyRef = inject(DestroyRef);
-
-  readonly colors: ColorItem[] = [
-    { id: 'red', label: '', hex: '#ff4d4d', sound: '/sounds/colors/red.mp3' },
-    { id: 'blue', label: '', hex: '#4d79ff', sound: '/sounds/colors/blue.mp3' },
-    { id: 'yellow', label: '', hex: '#ffd633', sound: '/sounds/colors/yellow.mp3' },
+  // 📚 LESSON (cố định theo page)
+  lessons = [
+    { correct: { id: 'yellow', label: 'Vàng', hex: '#ffd633', sound: '/sounds/ting.mp3' } },
+    { correct: { id: 'blue', label: 'Xanh dương', hex: '#4d79ff', sound: '/sounds/ting.mp3' } },
+    { correct: { id: 'red', label: 'Đỏ', hex: '#ff4d4d', sound: '/sounds/ting.mp3' } },
   ];
 
-  // STATE
-  currentIndex = signal(0);
-  isTouching = signal(false);
+  wrongPool: ColorItem[] = [
+    { id: 'green', label: 'Xanh lá', hex: '#3ddc84', sound: '/sounds/wrong.mp3' },
+    { id: 'pink', label: 'Hồng', hex: '#ff6bcb', sound: '/sounds/wrong.mp3' },
+    { id: 'purple', label: 'Tím', hex: '#a855f7', sound: '/sounds/wrong.mp3' },
+  ];
 
-  currentColor = computed(() => this.colors[this.currentIndex()]);
+  index = signal(0);
 
-  // swipe
+  leftColor = signal<ColorItem>(this.randomWrong());
+  rightColor = signal<ColorItem>(this.randomWrong());
+
+  correctSide = signal<Side>('left');
+
+  selectedSide = signal<Side | null>(null);
+
   private startX = 0;
   private dragX = signal(0);
 
-  transformStyle = computed(() => {
-    return `translateX(${this.dragX()}px)`;
-  });
-
-  private readonly TAP_THRESHOLD = 10;
-  private readonly SWIPE_THRESHOLD = 80;
-
-  // audio pool
-  private audios = new Map<string, HTMLAudioElement>();
-  private playingId: string | null = null;
-
   constructor() {
-    this.initAudios();
-    this.destroyRef.onDestroy(() => this.disposeAudios());
+    this.loadLesson();
   }
 
-  // TOUCH
+  // =====================
+  // LOAD PAGE (CHỈ SWIPE MỚI GỌI)
+  // =====================
+  private loadLesson() {
+
+    const lesson = this.lessons[this.index()];
+
+    const correct = lesson.correct;
+
+    let wrong = this.randomWrong();
+    while (wrong.id === correct.id) {
+      wrong = this.randomWrong();
+    }
+
+    const isLeft = Math.random() > 0.5;
+
+    this.leftColor.set(isLeft ? correct : wrong);
+    this.rightColor.set(isLeft ? wrong : correct);
+
+    this.correctSide.set(isLeft ? 'left' : 'right');
+
+    this.selectedSide.set(null);
+  }
+
+  private randomWrong(): ColorItem {
+    return this.wrongPool[
+      Math.floor(Math.random() * this.wrongPool.length)
+    ];
+  }
+
+  // =====================
+  // 👆 TAP (KHÔNG ĐỔI MÀU)
+  // =====================
+  pickColor(side: Side) {
+
+    this.selectedSide.set(side);
+
+    const isCorrect = side === this.correctSide();
+
+    const selected =
+      side === 'left' ? this.leftColor() : this.rightColor();
+
+    new Audio(selected.sound).play().catch(() => { });
+
+    if (isCorrect) {
+      new Audio('/sounds/ting.mp3').play().catch(() => { });
+    } else {
+      new Audio('/sounds/wrong.mp3').play().catch(() => { });
+    }
+
+    // ❌ KHÔNG gọi loadLesson ở đây
+    setTimeout(() => {
+      this.selectedSide.set(null);
+    }, 250);
+  }
+
+  // =====================
+  // 🔁 SWIPE = ĐỔI PAGE
+  // =====================
+  nextPage() {
+    this.index.update(i => (i + 1) % this.lessons.length);
+    this.loadLesson();
+  }
+
   onTouchStart(e: TouchEvent) {
-    this.pointerStart(e.touches[0].clientX);
+    this.startX = e.touches[0].clientX;
   }
 
   onTouchMove(e: TouchEvent) {
-    this.pointerMove(e.touches[0].clientX);
+    this.dragX.set(e.touches[0].clientX - this.startX);
   }
 
   onTouchEnd() {
-    this.pointerEnd();
+    if (Math.abs(this.dragX()) > 80) {
+      this.nextPage(); // ✅ ONLY HERE CHANGE COLOR
+    }
+    this.dragX.set(0);
   }
 
-  // MOUSE
   onMouseDown(e: MouseEvent) {
-    this.pointerStart(e.clientX);
+    this.startX = e.clientX;
   }
 
   onMouseMove(e: MouseEvent) {
-    this.pointerMove(e.clientX);
+    this.dragX.set(e.clientX - this.startX);
   }
 
   onMouseUp() {
-    this.pointerEnd();
+    this.onTouchEnd();
   }
 
   onMouseLeave() {
     this.dragX.set(0);
-  }
-
-  // CORE
-  private pointerStart(x: number) {
-    this.startX = x;
-  }
-
-  private pointerMove(x: number) {
-    this.dragX.set(x - this.startX);
-  }
-
-  private pointerEnd() {
-
-    const dx = this.dragX();
-
-    if (Math.abs(dx) < this.TAP_THRESHOLD) {
-      this.tap();
-    } else {
-      this.swipe(dx);
-    }
-
-    this.dragX.set(0);
-  }
-
-  private tap() {
-    this.isTouching.set(true);
-
-    const color = this.currentColor();
-
-    this.playSound(color.id);
-
-    navigator.vibrate?.(30);
-
-    setTimeout(() => this.isTouching.set(false), 150);
-  }
-
-  private swipe(dx: number) {
-    if (dx > this.SWIPE_THRESHOLD) {
-      this.go(-1);
-    } else if (dx < -this.SWIPE_THRESHOLD) {
-      this.go(1);
-    }
-  }
-
-  private go(dir: 1 | -1) {
-    this.stopSound();
-
-    this.currentIndex.update(i =>
-      (i + dir + this.colors.length) % this.colors.length
-    );
-  }
-
-  // AUDIO
-  private initAudios() {
-    for (const c of this.colors) {
-      const audio = new Audio(c.sound);
-      this.audios.set(c.id, audio);
-    }
-  }
-
-  private playSound(id: string) {
-    const audio = this.audios.get(id);
-    if (!audio) return;
-
-    this.stopSound();
-
-    audio.currentTime = 0;
-    audio.play();
-
-    this.playingId = id;
-  }
-
-  private stopSound() {
-    if (!this.playingId) return;
-
-    const audio = this.audios.get(this.playingId);
-    audio?.pause();
-    if (audio) audio.currentTime = 0;
-
-    this.playingId = null;
-  }
-
-  private disposeAudios() {
-    for (const audio of this.audios.values()) {
-      audio.pause();
-      audio.src = '';
-    }
-    this.audios.clear();
   }
 }
