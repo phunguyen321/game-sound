@@ -1,0 +1,33 @@
+<div class="game-container" (click)="explodeStar($event, starElement)">
+  <!-- sparkle -->
+  @for (s of sparkles; track $index) {
+    <div
+      class="sparkle"
+      [style.left.px]="s.x"
+      [style.top.px]="s.y"
+      [style.animation-delay.ms]="s.delay"
+    >
+      ✨
+    </div>
+  }
+
+  <!-- flying stars -->
+  @for (star of flyingStars; track $index) {
+    <div
+      class="flying-star"
+      [style.left.%]="star.left"
+      [style.top.%]="star.top"
+      [style.animation-duration.s]="star.duration"
+      [style.animation-delay.s]="star.delay"
+    >
+      {{ star.icon }}
+    </div>
+  }
+
+  <!-- center -->
+  <div class="center-wrapper">
+    <div #starElement class="main-star">
+      <img #starElement src="/images/star.svg" class="star" />
+    </div>
+  </div>
+</div>

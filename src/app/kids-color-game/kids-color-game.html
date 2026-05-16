@@ -1,0 +1,21 @@
+<div
+  class="flashcard-container"
+  (touchstart)="onTouchStart($event)"
+  (touchmove)="onTouchMove($event)"
+  (touchend)="onTouchEnd()"
+  (mousedown)="onMouseDown($event)"
+  (mousemove)="onMouseMove($event)"
+  (mouseup)="onMouseUp()"
+  (mouseleave)="onMouseLeave()"
+>
+  <div
+    class="flashcard"
+    [style.background]="currentColor().hex"
+    [style.transform]="transformStyle()"
+    [class.touching]="isTouching()"
+  >
+    <div class="color-text">
+      {{ currentColor().label }}
+    </div>
+  </div>
+</div>

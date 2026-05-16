@@ -1,0 +1,213 @@
+.game-container {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #fbc2eb, #a18cd1, #84fab0, #8fd3f4);
+
+  background-size: 400% 400%;
+
+  animation: rainbowMove 10s ease infinite;
+}
+
+/* rainbow bg */
+@keyframes rainbowMove {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* center */
+.center-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 10;
+}
+
+/* MAIN STAR */
+.main-star {
+  cursor: pointer;
+  user-select: none;
+
+  transition: transform 0.15s ease;
+
+  filter: drop-shadow(0 0 10px rgb(209, 182, 30)) drop-shadow(0 0 25px yellow)
+    drop-shadow(0 0 40px rgb(221, 154, 31));
+
+  animation:
+    floatMainStar 2s ease-in-out infinite,
+    pulseGlow 1.5s infinite alternate;
+}
+
+/* pressed */
+.main-star:active {
+  transform: scale(0.9);
+}
+
+/* rerun animation class */
+.main-star.animate {
+  animation:
+    explodeStar 700ms ease,
+    spinStar 700ms ease,
+    pulseGlow 1.5s infinite alternate;
+}
+
+/* floating */
+@keyframes floatMainStar {
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-20px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+/* glow */
+@keyframes pulseGlow {
+  from {
+    filter: drop-shadow(0 0 10px rgb(209, 182, 30)) drop-shadow(0 0 25px yellow);
+  }
+
+  to {
+    filter: drop-shadow(0 0 25px rgb(209, 182, 30)) drop-shadow(0 0 50px yellow)
+      drop-shadow(0 0 70px rgb(221, 154, 31));
+  }
+}
+
+/* explode */
+@keyframes explodeStar {
+  0% {
+    transform: scale(1);
+  }
+
+  40% {
+    transform: scale(2.3);
+  }
+
+  70% {
+    transform: scale(1.8);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* spin */
+@keyframes spinStar {
+  from {
+    rotate: 0deg;
+  }
+
+  to {
+    rotate: 360deg;
+  }
+}
+
+/* tap text */
+.tap-text {
+  margin-top: 24px;
+
+  font-size: 34px;
+  font-weight: bold;
+
+  color: white;
+
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+
+  animation: bounceText 1s infinite;
+}
+
+@keyframes bounceText {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* sparkle */
+.sparkle {
+  position: absolute;
+
+  font-size: 30px;
+
+  pointer-events: none;
+
+  animation: sparkleFly 1.2s ease-out forwards;
+}
+
+@keyframes sparkleFly {
+  0% {
+    opacity: 1;
+
+    transform: translate(0, 0) scale(0.5);
+  }
+
+  100% {
+    opacity: 0;
+
+    transform: translate(calc(-200px + 400px * var(--x)), calc(-200px + 400px * var(--y))) scale(2);
+  }
+}
+
+/* flying stars */
+.flying-star {
+  position: absolute;
+
+  font-size: 50px;
+
+  opacity: 0.7;
+
+  animation:
+    flyingMove linear infinite,
+    twinkle 1.5s infinite alternate;
+}
+
+/* move */
+@keyframes flyingMove {
+  0% {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-30px) rotate(20deg);
+  }
+
+  100% {
+    transform: translateY(0) rotate(-20deg);
+  }
+}
+
+/* twinkle */
+@keyframes twinkle {
+  from {
+    opacity: 0.4;
+  }
+
+  to {
+    opacity: 1;
+  }
+}

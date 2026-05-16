@@ -19,9 +19,9 @@ export class PlaySound {
   private destroyRef = inject(DestroyRef);
 
   readonly animals: Animal[] = [
-    { id: 'duck', name: 'Vịt', image: '/images/duck.png', sound: '/sounds/duck.mp3' },
-    { id: 'chicken', name: 'Gà', image: '/images/chicken.png', sound: '/sounds/chicken.mp3' },
-    { id: 'bird', name: 'Chim', image: '/images/bird.png', sound: '/sounds/bird.mp3' },
+    { id: 'duck', name: 'Vịt', image: '/images/duck.png', sound: '/sounds/animal/mot-con-vit.mp3' },
+    { id: 'chicken', name: 'Gà', image: '/images/chicken.png', sound: '/sounds/animal/dan-ga-con.mp3' },
+    { id: 'shark', name: 'Cá mập', image: '/images/shark.png', sound: '/sounds/animal/baby-shark.mp3' },
   ];
 
   // --- State --- 

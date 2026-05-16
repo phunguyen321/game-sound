@@ -1,0 +1,100 @@
+.home-container {
+  width: 100vw;
+  min-height: 100vh;
+
+  padding: 40px;
+
+  box-sizing: border-box;
+
+  background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #fbc2eb, #a18cd1, #84fab0, #8fd3f4);
+
+  background-size: 400% 400%;
+  animation: bgMove 10s ease infinite;
+}
+
+@keyframes bgMove {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.title {
+  text-align: center;
+  font-size: 48px;
+  font-weight: bold;
+  color: white;
+
+  text-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+.subtitle {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 20px;
+  color: white;
+}
+
+.game-grid {
+  margin-top: 50px;
+
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 24px;
+
+  max-width: 900px;
+  margin-inline: auto;
+}
+
+.game-card {
+  height: 180px;
+
+  border-radius: 30px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 26px;
+  font-weight: bold;
+
+  color: white;
+
+  cursor: pointer;
+
+  user-select: none;
+
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.2s ease;
+
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+
+  border: 4px solid rgba(255, 255, 255, 0.4);
+}
+
+.game-card:hover {
+  transform: scale(1.05);
+}
+
+.game-card:active {
+  transform: scale(0.95);
+}
+
+/* từng card màu riêng */
+.star {
+  background: linear-gradient(45deg, #ffd700, #ffec8b);
+}
+
+.color {
+  background: linear-gradient(45deg, #4facfe, #00f2fe);
+}
+
+.swipe {
+  background: linear-gradient(45deg, #43e97b, #38f9d7);
+}
