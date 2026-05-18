@@ -19,25 +19,60 @@ type Side = 'left' | 'right';
 })
 export class KidsColorGame {
 
-  // 📚 LESSON (cố định theo page)
-  lessons = [
-    { correct: { id: 'yellow', label: 'Vàng', hex: '#ffd633', sound: '/sounds/ting.mp3' } },
-    { correct: { id: 'blue', label: 'Xanh dương', hex: '#4d79ff', sound: '/sounds/ting.mp3' } },
-    { correct: { id: 'red', label: 'Đỏ', hex: '#ff4d4d', sound: '/sounds/ting.mp3' } },
-  ];
+  // =====================
+  // 🎨 COLORS
+  // =====================
 
-  wrongPool: ColorItem[] = [
-    { id: 'green', label: 'Xanh lá', hex: '#3ddc84', sound: '/sounds/wrong.mp3' },
-    { id: 'pink', label: 'Hồng', hex: '#ff6bcb', sound: '/sounds/wrong.mp3' },
-    { id: 'purple', label: 'Tím', hex: '#a855f7', sound: '/sounds/wrong.mp3' },
+  blue: ColorItem = {
+    id: 'blue',
+    label: 'Xanh dương',
+    hex: '#4d79ff',
+    sound: '/sounds/color/color-blue.mp3'
+  };
+
+  yellow: ColorItem = {
+    id: 'yellow',
+    label: 'Vàng',
+    hex: '#ffd633',
+    sound: '/sounds/color/color-yellow.mp3'
+  };
+
+  red: ColorItem = {
+    id: 'red',
+    label: 'Đỏ',
+    hex: '#ff4d4d',
+    sound: '/sounds/color/color-red.mp3'
+  };
+
+  // =====================
+  // 📚 3 PAGES CỐ ĐỊNH
+  // =====================
+
+  lessons = [
+
+    {
+      correct: this.yellow,
+      wrong: this.blue
+    },
+
+    {
+      correct: this.red,
+      wrong: this.yellow
+    },
+
+    {
+      correct: this.blue,
+      wrong: this.red
+    }
+
   ];
 
   index = signal(0);
 
-  leftColor = signal<ColorItem>(this.randomWrong());
-  rightColor = signal<ColorItem>(this.randomWrong());
+  leftColor = signal<ColorItem>(this.blue);
+  rightColor = signal<ColorItem>(this.yellow);
 
-  correctSide = signal<Side>('left');
+  correctSide = signal<Side>('right');
 
   selectedSide = signal<Side | null>(null);
 
@@ -49,38 +84,38 @@ export class KidsColorGame {
   }
 
   // =====================
-  // LOAD PAGE (CHỈ SWIPE MỚI GỌI)
+  // LOAD PAGE
   // =====================
+
   private loadLesson() {
 
     const lesson = this.lessons[this.index()];
 
-    const correct = lesson.correct;
+    const sides: Side[] = ['left', 'right'];
 
-    let wrong = this.randomWrong();
-    while (wrong.id === correct.id) {
-      wrong = this.randomWrong();
+    // random thật
+    const randomSide =
+      sides[Math.floor(Math.random() * sides.length)];
+
+    this.correctSide.set(randomSide);
+
+    if (randomSide === 'left') {
+
+      this.leftColor.set(lesson.correct);
+      this.rightColor.set(lesson.wrong);
+
+    } else {
+
+      this.leftColor.set(lesson.wrong);
+      this.rightColor.set(lesson.correct);
     }
-
-    const isLeft = Math.random() > 0.5;
-
-    this.leftColor.set(isLeft ? correct : wrong);
-    this.rightColor.set(isLeft ? wrong : correct);
-
-    this.correctSide.set(isLeft ? 'left' : 'right');
 
     this.selectedSide.set(null);
   }
-
-  private randomWrong(): ColorItem {
-    return this.wrongPool[
-      Math.floor(Math.random() * this.wrongPool.length)
-    ];
-  }
-
   // =====================
-  // 👆 TAP (KHÔNG ĐỔI MÀU)
+  // 👆 TAP COLOR
   // =====================
+
   pickColor(side: Side) {
 
     this.selectedSide.set(side);
@@ -88,29 +123,39 @@ export class KidsColorGame {
     const isCorrect = side === this.correctSide();
 
     const selected =
-      side === 'left' ? this.leftColor() : this.rightColor();
+      side === 'left'
+        ? this.leftColor()
+        : this.rightColor();
 
-    new Audio(selected.sound).play().catch(() => { });
-
+    // ✅ ĐÚNG -> đọc tên màu
     if (isCorrect) {
-      new Audio('/sounds/ting.mp3').play().catch(() => { });
+
+      new Audio(selected.sound).play().catch(() => { });
+
     } else {
+
+      // ❌ SAI -> chỉ phát wrong
       new Audio('/sounds/wrong.mp3').play().catch(() => { });
+
     }
 
-    // ❌ KHÔNG gọi loadLesson ở đây
     setTimeout(() => {
       this.selectedSide.set(null);
     }, 250);
   }
 
   // =====================
-  // 🔁 SWIPE = ĐỔI PAGE
+  // 🔁 NEXT PAGE
   // =====================
+
   nextPage() {
     this.index.update(i => (i + 1) % this.lessons.length);
     this.loadLesson();
   }
+
+  // =====================
+  // 📱 TOUCH
+  // =====================
 
   onTouchStart(e: TouchEvent) {
     this.startX = e.touches[0].clientX;
@@ -121,11 +166,17 @@ export class KidsColorGame {
   }
 
   onTouchEnd() {
+
     if (Math.abs(this.dragX()) > 80) {
-      this.nextPage(); // ✅ ONLY HERE CHANGE COLOR
+      this.nextPage();
     }
+
     this.dragX.set(0);
   }
+
+  // =====================
+  // 🖱️ MOUSE
+  // =====================
 
   onMouseDown(e: MouseEvent) {
     this.startX = e.clientX;
