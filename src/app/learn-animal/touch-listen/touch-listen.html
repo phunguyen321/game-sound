@@ -1,0 +1,49 @@
+<div class="touch-container">
+  <button class="back-btn" (click)="backToHome()">⬅️ Về Menu Chính</button>
+
+  <div class="content-wrapper">
+    <h1 class="title">🔊 CHẠM & NGHE ÂM THANH 🐾</h1>
+
+    <div class="message-box animate-pop">
+      {{ message() }}
+    </div>
+
+    <div class="animals-grid">
+      <!-- 1. GÀ -->
+      <div
+        class="animal-card"
+        [class.active]="activeAnimal() === 'chicken'"
+        (click)="interactWithAnimal('chicken')"
+      >
+        <div class="image-wrapper">
+          <img [src]="animalImages.chicken.current" alt="Gà mẹ" class="animal-img" />
+        </div>
+        <h2>Gà Mẹ</h2>
+      </div>
+
+      <!-- 2. CÁ -->
+      <div
+        class="animal-card"
+        [class.active]="activeAnimal() === 'fish'"
+        (click)="interactWithAnimal('fish')"
+      >
+        <div class="image-wrapper">
+          <img [src]="animalImages.fish.current" alt="Cá nhỏ" class="animal-img" />
+        </div>
+        <h2>Cá Nhỏ</h2>
+      </div>
+
+      <!-- 3. CHÓ -->
+      <div
+        class="animal-card"
+        [class.active]="activeAnimal() === 'dog'"
+        (click)="interactWithAnimal('dog')"
+      >
+        <div class="image-wrapper">
+          <img [src]="animalImages.dog.current" alt="Cún con" class="animal-img" />
+        </div>
+        <h2>Cún Con</h2>
+      </div>
+    </div>
+  </div>
+</div>

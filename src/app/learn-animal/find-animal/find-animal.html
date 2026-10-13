@@ -1,0 +1,97 @@
+<div class="find-animal-container">
+  <!-- Nút quay lại -->
+  <button class="back-btn" (click)="selectedHabitat() ? backToHabitats() : backToHome()">
+    ⬅️ {{ selectedHabitat() ? 'Chọn Khu Vực Khác' : 'Về Menu Chính' }}
+  </button>
+
+  <!-- TRƯỜNG HỢP 1: CHƯA CHỌN KHU VỰC -> HIỆN THỊ 3 MENU (Hồ, Ổ trứng, Chuồng chó) -->
+  @if (!selectedHabitat()) {
+    <div class="habitat-selection animate-fade-in">
+      <h1 class="title">🌊 TRUY TÌM BẠN THÚ 🏡</h1>
+      <p class="subtitle">Bé hãy chọn một nơi để xem ai đang trốn ở đó nhé!</p>
+
+      <div class="habitat-grid">
+        <!-- 1. Cái Hồ -->
+        <div class="habitat-card card-lake" (click)="selectHabitat('lake')">
+          <div class="card-icon">🌊🦆</div>
+          <h2>Cái Hồ Xanh Mát</h2>
+          <p>Ai đang bơi lội dưới nước nhỉ?</p>
+        </div>
+
+        <!-- 2. Ổ Trứng Gà -->
+        <div class="habitat-card card-nest" (click)="selectHabitat('chicken-nest')">
+          <div class="card-icon">🥚🐣</div>
+          <h2>Ổ Trứng Gà</h2>
+          <p>Có gì đang lục đục sắp nở ra kìa?</p>
+        </div>
+
+        <!-- 3. Chuồng Chó -->
+        <div class="habitat-card card-doghouse" (click)="selectHabitat('dog-house')">
+          <div class="card-icon">🏠🐶</div>
+          <h2>Chuồng Chó Ấm Áp</h2>
+          <p>Bạn nhỏ nào đang vẫy đuôi chờ bé?</p>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- TRƯỜNG HỢP 2: ĐÃ CHỌN KHU VỰC -> HIỆN NỘI DUNG CHI TIẾT TRONG KHU VỰC ĐÓ -->
+  @if (selectedHabitat() === 'lake') {
+    <div class="game-play-area animate-fade-in">
+      <h2 class="area-title">🌊 Khám phá Cái Hồ Xanh</h2>
+      <p class="area-hint">Bé hãy chạm vào mặt nước để tìm các bạn dưới hồ nhé!</p>
+
+      <!-- Ví dụ danh sách các con vật ở hồ -->
+      <div class="animal-hidden-box">
+        <div class="found-animal-card">
+          <span class="animal-emoji">🦆</span>
+          <span>Chú Vịt Bầu</span>
+        </div>
+        <div class="found-animal-card">
+          <span class="animal-emoji">🐸</span>
+          <span>Chú Ếch Ộp</span>
+        </div>
+        <div class="found-animal-card">
+          <span class="animal-emoji">🐟</span>
+          <span>Đàn Cá Nhỏ</span>
+        </div>
+      </div>
+    </div>
+  }
+
+  @if (selectedHabitat() === 'chicken-nest') {
+    <div class="game-play-area animate-fade-in">
+      <h2 class="area-title">🥚 Khám phá Ổ Trứng Gà</h2>
+      <p class="area-hint">Chạm vào quả trứng để xem điều kỳ diệu!</p>
+
+      <div class="animal-hidden-box">
+        <div class="found-animal-card">
+          <span class="animal-emoji">🐥</span>
+          <span>Gà Con Lật Đật</span>
+        </div>
+        <div class="found-animal-card">
+          <span class="animal-emoji">🐔</span>
+          <span>Gà Mẹ Cục Tác</span>
+        </div>
+      </div>
+    </div>
+  }
+
+  @if (selectedHabitat() === 'dog-house') {
+    <div class="game-play-area animate-fade-in">
+      <h2 class="area-title">🏠 Khám phá Chuồng Chó</h2>
+      <p class="area-hint">Gõ cửa chuồng chó xem ai đang ở trong nào!</p>
+
+      <div class="animal-hidden-box">
+        <div class="found-animal-card">
+          <span class="animal-emoji">🐶</span>
+          <span>Cún Con Đốm</span>
+        </div>
+        <div class="found-animal-card">
+          <span class="animal-emoji">🦴</span>
+          <span>Chiếc Xương Thơm Ngon</span>
+        </div>
+      </div>
+    </div>
+  }
+</div>

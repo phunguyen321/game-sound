@@ -1,0 +1,141 @@
+.touch-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(135deg, #fbc531 0%, #e84118 100%);
+  font-family: 'Comic Sans MS', 'Arial', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  user-select: none;
+}
+
+.back-btn {
+  position: absolute;
+  top: 25px;
+  left: 25px;
+  background: white;
+  border: 3px solid #c23616;
+  color: #c23616;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 30px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  z-index: 10;
+  transition: transform 0.2s;
+}
+
+.back-btn:hover {
+  transform: scale(1.05);
+}
+
+.content-wrapper {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title {
+  color: #ffffff;
+  font-size: 2.8rem;
+  margin: 0 0 20px 0;
+  text-shadow: 3px 3px 0px #c23616;
+}
+
+.message-box {
+  background: white;
+  color: #c23616;
+  font-size: 1.4rem;
+  font-weight: bold;
+  padding: 15px 30px;
+  border-radius: 50px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  margin-bottom: 40px;
+  min-width: 350px;
+  border: 4px dashed #ff793f;
+}
+
+.animals-grid {
+  display: flex;
+  gap: 50px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.animal-card {
+  background: white;
+  width: 240px; /* Tăng nhẹ chiều rộng card cho cân đối */
+  padding: 25px 20px;
+  border-radius: 30px;
+  cursor: pointer;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: 5px solid white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.animal-card:hover {
+  transform: translateY(-10px) scale(1.05);
+}
+
+.animal-card.active {
+  transform: scale(1.15) rotate(3deg);
+  //   background: #fff3cd;
+  border-color: #ffda6a;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+}
+
+/* --- TĂNG KÍCH THƯỚC KHUNG ẢNH ĐỂ KHÔNG BỊ NHỎ --- */
+.image-wrapper {
+  width: 230px; /* Mở rộng bề ngang khung ảnh */
+  height: 230px; /* Mở rộng chiều cao khung ảnh */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.animal-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Dùng cover hoặc contain tuỳ thuộc vào ảnh của bạn để lấp đầy khung */
+  border-radius: 20px; /* Bo tròn góc ảnh cho mềm mại, hợp với trẻ nhỏ */
+  pointer-events: none;
+}
+
+.animal-card h2 {
+  color: #333;
+  font-size: 1.4rem;
+  margin: 0 0 5px 0;
+}
+
+.tap-hint {
+  color: #e84118;
+  font-size: 0.9rem;
+  font-weight: bold;
+  background: #ffeaa7;
+  padding: 4px 12px;
+  border-radius: 15px;
+}
+
+@keyframes popIn {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-pop {
+  animation: popIn 0.3s ease-out forwards;
+}

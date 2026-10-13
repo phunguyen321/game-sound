@@ -1,0 +1,170 @@
+.find-animal-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(135deg, #e0f7fa 0%, #80deea 100%);
+  font-family: 'Comic Sans MS', 'Arial', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  user-select: none;
+}
+
+/* Nút quay lại */
+.back-btn {
+  position: absolute;
+  top: 25px;
+  left: 25px;
+  background: white;
+  border: 3px solid #00acc1;
+  color: #00838f;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 30px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+  z-index: 10;
+}
+
+.back-btn:hover {
+  transform: scale(1.05);
+  background: #e0f2f1;
+}
+
+/* Màn hình chọn khu vực */
+.habitat-selection {
+  text-align: center;
+}
+
+.title {
+  color: #006064;
+  font-size: 3rem;
+  margin: 0;
+  text-shadow: 2px 2px 0px #ffffff;
+}
+
+.subtitle {
+  color: #00838f;
+  font-size: 1.2rem;
+  margin: 10px 0 40px 0;
+  font-weight: bold;
+}
+
+.habitat-grid {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.habitat-card {
+  background: white;
+  width: 260px;
+  padding: 30px 20px;
+  border-radius: 30px;
+  cursor: pointer;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: 5px solid white;
+}
+
+.habitat-card:hover {
+  transform: translateY(-12px) scale(1.03);
+}
+
+/* Màu đặc trưng cho từng khu vực */
+.card-lake {
+  border-color: #03a9f4;
+}
+.card-nest {
+  border-color: #ffb300;
+}
+.card-doghouse {
+  border-color: #8d6e63;
+}
+
+.card-icon {
+  font-size: 4.5rem;
+  margin-bottom: 15px;
+}
+
+.habitat-card h2 {
+  color: #333;
+  font-size: 1.3rem;
+  margin: 0 0 10px 0;
+}
+
+.habitat-card p {
+  color: #666;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+/* Màn hình chơi bên trong khu vực */
+.game-play-area {
+  text-align: center;
+  max-width: 800px;
+}
+
+.area-title {
+  color: #006064;
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.area-hint {
+  color: #00838f;
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+  font-weight: bold;
+}
+
+.animal-hidden-box {
+  display: flex;
+  gap: 25px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.found-animal-card {
+  background: white;
+  padding: 20px 30px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  border: 3px solid #4dd0e1;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.found-animal-card:hover {
+  transform: scale(1.1);
+  background: #e0f7fa;
+}
+
+.animal-emoji {
+  font-size: 4rem;
+  margin-bottom: 10px;
+}
+
+/* Hiệu ứng chuyển động */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out forwards;
+}

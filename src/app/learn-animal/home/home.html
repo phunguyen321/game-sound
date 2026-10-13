@@ -1,0 +1,61 @@
+<div class="home-container">
+  <!-- 1. MÀN HÌNH CHỜ: TAP TO PLAY -->
+  @if (screenState() === 'welcome') {
+    <div class="welcome-screen" (click)="startExperience()">
+      <div class="welcome-card animate-bounce">
+        <span class="welcome-icon">🦁</span>
+        <h1 class="welcome-title">Thế Giới Động Vật</h1>
+        <p class="welcome-subtitle">Khám phá thiên nhiên kỳ thú cùng bé!</p>
+        <button class="play-btn">CHẠM ĐỂ BẮT ĐẦU 🚀</button>
+      </div>
+    </div>
+  }
+
+  <!-- 2. MÀN HÌNH VIDEO INTRO -->
+  @if (screenState() === 'playing') {
+    <div class="video-overlay">
+      <video #introVideo playsinline (ended)="onVideoEnded()" class="intro-video">
+        <source src="/videos/intro.mp4" type="video/mp4" />
+        Trình duyệt của bạn không hỗ trợ thẻ video.
+      </video>
+
+      <button class="skip-btn" (click)="skipVideo()">Bỏ qua ⏭️</button>
+    </div>
+  }
+
+  <!-- 3. MÀN HÌNH MENU GAME "THẾ GIỚI ĐỘNG VẬT" -->
+  @if (screenState() === 'menu') {
+    <div class="game-menu animate-fade-in">
+      <div class="menu-header">
+        <h1 class="menu-title">🌿 THẾ GIỚI ĐỘNG VẬT 🦁</h1>
+        <p class="menu-desc">Bé hãy chọn một trò chơi để bắt đầu khám phá nhé!</p>
+      </div>
+
+      <div class="game-grid">
+        <!-- Game 1: Hành trình tìm con vật -->
+        <div class="game-card card-jungle" (click)="selectGame('find-animal')">
+          <div class="card-badge">Thám hiểm</div>
+          <span class="game-icon">🔍🐘</span>
+          <h3>Hành Trình Tìm Con Vật</h3>
+          <p>Đi tìm các bạn động vật bị giấu trong rừng xanh!</p>
+        </div>
+
+        <!-- Game 2: Nghe âm thanh tập nói -->
+        <div class="game-card card-savannah" (click)="selectGame('listen-speak')">
+          <div class="card-badge">Tập nói</div>
+          <span class="game-icon">🔊🗣️</span>
+          <h3>Nghe Âm Thanh Tập Nói</h3>
+          <p>Nghe tiếng kêu và học gọi tên các bạn thú!</p>
+        </div>
+
+        <!-- Game 3: Chạm vào vật để nghe -->
+        <div class="game-card card-farm" (click)="selectGame('touch-listen')">
+          <div class="card-badge">Tương tác</div>
+          <span class="game-icon">👉🐮</span>
+          <h3>Chạm & Khám Phá</h3>
+          <p>Chạm vào từng con vật để nghe tiếng kêu & câu chuyện!</p>
+        </div>
+      </div>
+    </div>
+  }
+</div>
