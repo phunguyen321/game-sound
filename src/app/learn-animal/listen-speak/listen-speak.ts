@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 interface Habitat {
   id: string;
@@ -13,13 +13,17 @@ interface Habitat {
   templateUrl: './listen-speak.html',
   styleUrl: './listen-speak.scss',
 })
-export class ListenSpeak {
+export class ListenSpeak implements OnInit, OnDestroy {
   private currentAudio: HTMLAudioElement | null = null;
 
   // Lưu trữ id của khu vực đang được chọn/phát
   selectedHabitatId: string | null = null;
   router = inject(Router);
 
+  // Biến quản lý âm thanh intro khi vừa vào màn hình
+  private introAudio: HTMLAudioElement | null = null;
+  // Biến quản lý âm thanh tương tác của con vật (nếu cần)
+  private interactionAudio: HTMLAudioElement | null = null;
   readonly HABITATS: Habitat[] = [
     {
       id: 'lake',
@@ -43,6 +47,10 @@ export class ListenSpeak {
       audio: '/sounds/audio_ga_gay.mp3'
     }
   ];
+
+  ngOnInit(): void {
+    this.playIntroAudio();
+  }
 
   selectHabitat(habitat: Habitat) {
     // Nếu bấm lại vào chính hình đang chọn -> Tắt âm thanh, trả về hình tĩnh, bỏ chọn
@@ -80,9 +88,37 @@ export class ListenSpeak {
 
   goHome() {
     this.stopCurrentAudio();
+    this.stopAllAudio();
     this.selectedHabitatId = null;
     console.log('Đã trở về Menu Chính / Home');
     // Thêm logic điều hướng về trang Home của bạn ở đây (nếu dùng Angular Router: this.router.navigate(['/home']);)
     this.router.navigate(['/'])
+  }
+
+  private playIntroAudio() {
+    try {
+      // Thay đổi đường dẫn đến file mp3 giới thiệu màn hình của bạn
+      this.introAudio = new Audio('/sounds/part_2.m4a');
+      this.introAudio.play().catch(error => {
+        console.log("Trình duyệt chặn tự động phát âm thanh:", error);
+      });
+    } catch (e) {
+      console.error("Lỗi khởi tạo file audio intro:", e);
+    }
+  }
+
+  private stopAllAudio() {
+    if (this.introAudio) {
+      this.introAudio.pause();
+      this.introAudio = null;
+    }
+    if (this.interactionAudio) {
+      this.interactionAudio.pause();
+      this.interactionAudio = null;
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.stopAllAudio();
   }
 }
