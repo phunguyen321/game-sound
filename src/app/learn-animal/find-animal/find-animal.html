@@ -1,97 +1,68 @@
 <div class="find-animal-container">
   <!-- Nút quay lại -->
-  <button class="back-btn" (click)="selectedHabitat() ? backToHabitats() : backToHome()">
-    ⬅️ {{ selectedHabitat() ? 'Chọn Khu Vực Khác' : 'Về Menu Chính' }}
+  <button class="back-btn" (click)="selectedHabitatId() ? backToHabitats() : backToHome()">
+    ⬅️ {{ selectedHabitatId() ? 'Chọn Khu Vực Khác' : 'Về Menu Chính' }}
   </button>
 
-  <!-- TRƯỜNG HỢP 1: CHƯA CHỌN KHU VỰC -> HIỆN THỊ 3 MENU (Hồ, Ổ trứng, Chuồng chó) -->
-  @if (!selectedHabitat()) {
+  <!-- MENU CHA -->
+  @if (!selectedHabitatId()) {
     <div class="habitat-selection animate-fade-in">
       <h1 class="title">🌊 TRUY TÌM BẠN THÚ 🏡</h1>
       <p class="subtitle">Bé hãy chọn một nơi để xem ai đang trốn ở đó nhé!</p>
 
       <div class="habitat-grid">
-        <!-- 1. Cái Hồ -->
-        <div class="habitat-card card-lake" (click)="selectHabitat('lake')">
-          <div class="card-icon">🌊🦆</div>
-          <h2>Cái Hồ Xanh Mát</h2>
-          <p>Ai đang bơi lội dưới nước nhỉ?</p>
-        </div>
-
-        <!-- 2. Ổ Trứng Gà -->
-        <div class="habitat-card card-nest" (click)="selectHabitat('chicken-nest')">
-          <div class="card-icon">🥚🐣</div>
-          <h2>Ổ Trứng Gà</h2>
-          <p>Có gì đang lục đục sắp nở ra kìa?</p>
-        </div>
-
-        <!-- 3. Chuồng Chó -->
-        <div class="habitat-card card-doghouse" (click)="selectHabitat('dog-house')">
-          <div class="card-icon">🏠🐶</div>
-          <h2>Chuồng Chó Ấm Áp</h2>
-          <p>Bạn nhỏ nào đang vẫy đuôi chờ bé?</p>
-        </div>
+        @for (item of habitats; track item.id) {
+          <div class="habitat-item" (click)="selectHabitat(item.id)">
+            <div class="image-wrapper">
+              <img [src]="item.image" [alt]="item.name" class="habitat-img" />
+            </div>
+            <h2 class="habitat-name">{{ item.name }}</h2>
+          </div>
+        }
       </div>
     </div>
   }
 
-  <!-- TRƯỜNG HỢP 2: ĐÃ CHỌN KHU VỰC -> HIỆN NỘI DUNG CHI TIẾT TRONG KHU VỰC ĐÓ -->
-  @if (selectedHabitat() === 'lake') {
+  <!-- MENU CON BÊN TRONG (Hình tam giác: 2 trên, 1 dưới) -->
+  @if (selectedHabitatId() && currentActiveHabitat) {
     <div class="game-play-area animate-fade-in">
-      <h2 class="area-title">🌊 Khám phá Cái Hồ Xanh</h2>
-      <p class="area-hint">Bé hãy chạm vào mặt nước để tìm các bạn dưới hồ nhé!</p>
+      
+      <!-- BÊN TRÁI: Ảnh khu vực thu nhỏ -->
+      <div class="habitat-side-preview">
+        <div class="image-wrapper large-preview">
+          <img [src]="currentActiveHabitat.image" [alt]="currentActiveHabitat.name" class="habitat-img" />
+        </div>
+        <h2 class="habitat-name">{{ currentActiveHabitat.name }}</h2>
+      </div>
 
-      <!-- Ví dụ danh sách các con vật ở hồ -->
-      <div class="animal-hidden-box">
-        <div class="found-animal-card">
-          <span class="animal-emoji">🦆</span>
-          <span>Chú Vịt Bầu</span>
+      <!-- BÊN PHẢI: Bố cục hình tam giác chứa hình ảnh con vật -->
+      <div class="triangle-animals-layout">
+        <div class="triangle-row top-row">
+          @if (currentActiveHabitat.items[0]) {
+            <div class="slot-animal-item animate-bounce" (click)="playItemSound(currentActiveHabitat.items[0])">
+              <img [src]="currentActiveHabitat.items[0].image" [alt]="currentActiveHabitat.items[0].name" class="item-real-img" />
+            </div>
+          }
+          @if (currentActiveHabitat.items[1]) {
+            <div class="slot-animal-item animate-bounce" (click)="playItemSound(currentActiveHabitat.items[1])">
+              <img [src]="currentActiveHabitat.items[1].image" [alt]="currentActiveHabitat.items[1].name" class="item-real-img" />
+            </div>
+          }
         </div>
-        <div class="found-animal-card">
-          <span class="animal-emoji">🐸</span>
-          <span>Chú Ếch Ộp</span>
-        </div>
-        <div class="found-animal-card">
-          <span class="animal-emoji">🐟</span>
-          <span>Đàn Cá Nhỏ</span>
+        <div class="triangle-row bottom-row">
+          @if (currentActiveHabitat.items[2]) {
+            <div class="slot-animal-item animate-bounce" (click)="playItemSound(currentActiveHabitat.items[2])">
+              <img [src]="currentActiveHabitat.items[2].image" [alt]="currentActiveHabitat.items[2].name" class="item-real-img" />
+            </div>
+          }
         </div>
       </div>
-    </div>
-  }
 
-  @if (selectedHabitat() === 'chicken-nest') {
-    <div class="game-play-area animate-fade-in">
-      <h2 class="area-title">🥚 Khám phá Ổ Trứng Gà</h2>
-      <p class="area-hint">Chạm vào quả trứng để xem điều kỳ diệu!</p>
-
-      <div class="animal-hidden-box">
-        <div class="found-animal-card">
-          <span class="animal-emoji">🐥</span>
-          <span>Gà Con Lật Đật</span>
-        </div>
-        <div class="found-animal-card">
-          <span class="animal-emoji">🐔</span>
-          <span>Gà Mẹ Cục Tác</span>
-        </div>
+      <!-- HƯỚNG DẪN DƯỚI CÙNG -->
+      <div class="play-instruction">
+        {{ currentActiveHabitat.hint }}
       </div>
-    </div>
-  }
 
-  @if (selectedHabitat() === 'dog-house') {
-    <div class="game-play-area animate-fade-in">
-      <h2 class="area-title">🏠 Khám phá Chuồng Chó</h2>
-      <p class="area-hint">Gõ cửa chuồng chó xem ai đang ở trong nào!</p>
-
-      <div class="animal-hidden-box">
-        <div class="found-animal-card">
-          <span class="animal-emoji">🐶</span>
-          <span>Cún Con Đốm</span>
-        </div>
-        <div class="found-animal-card">
-          <span class="animal-emoji">🦴</span>
-          <span>Chiếc Xương Thơm Ngon</span>
-        </div>
-      </div>
     </div>
   }
 </div>

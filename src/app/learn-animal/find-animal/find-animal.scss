@@ -10,6 +10,8 @@
   justify-content: center;
   overflow: hidden;
   user-select: none;
+  box-sizing: border-box;
+  padding: 20px;
 }
 
 /* Nút quay lại */
@@ -20,137 +22,275 @@
   background: white;
   border: 3px solid #00acc1;
   color: #00838f;
-  padding: 10px 20px;
-  font-size: 1rem;
+  padding: 12px 24px;
+  font-size: 1.1rem;
   font-weight: bold;
   border-radius: 30px;
   cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
   transition: transform 0.2s;
   z-index: 10;
 }
 
-.back-btn:hover {
-  transform: scale(1.05);
-  background: #e0f2f1;
+.back-btn:active {
+  transform: scale(0.95);
 }
 
-/* Màn hình chọn khu vực */
+/* Màn hình chọn khu vực (Menu ngoài) */
 .habitat-selection {
   text-align: center;
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .title {
   color: #006064;
-  font-size: 3rem;
+  font-size: 2.8rem;
   margin: 0;
   text-shadow: 2px 2px 0px #ffffff;
 }
 
 .subtitle {
   color: #00838f;
-  font-size: 1.2rem;
-  margin: 10px 0 40px 0;
+  font-size: 1.25rem;
+  margin: 8px 0 20px 0;
   font-weight: bold;
 }
 
 .habitat-grid {
   display: flex;
+  flex-direction: row;
   gap: 30px;
-  flex-wrap: wrap;
   justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 
-.habitat-card {
-  background: white;
-  width: 260px;
-  padding: 30px 20px;
-  border-radius: 30px;
-  cursor: pointer;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  border: 5px solid white;
-}
-
-.habitat-card:hover {
-  transform: translateY(-12px) scale(1.03);
-}
-
-/* Màu đặc trưng cho từng khu vực */
-.card-lake {
-  border-color: #03a9f4;
-}
-.card-nest {
-  border-color: #ffb300;
-}
-.card-doghouse {
-  border-color: #8d6e63;
-}
-
-.card-icon {
-  font-size: 4.5rem;
-  margin-bottom: 15px;
-}
-
-.habitat-card h2 {
-  color: #333;
-  font-size: 1.3rem;
-  margin: 0 0 10px 0;
-}
-
-.habitat-card p {
-  color: #666;
-  font-size: 0.9rem;
-  margin: 0;
-}
-
-/* Màn hình chơi bên trong khu vực */
-.game-play-area {
-  text-align: center;
-  max-width: 800px;
-}
-
-.area-title {
-  color: #006064;
-  font-size: 2.5rem;
-  margin-bottom: 10px;
-}
-
-.area-hint {
-  color: #00838f;
-  font-size: 1.2rem;
-  margin-bottom: 30px;
-  font-weight: bold;
-}
-
-.animal-hidden-box {
-  display: flex;
-  gap: 25px;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.found-animal-card {
-  background: white;
-  padding: 20px 30px;
-  border-radius: 20px;
+.habitat-item {
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-  border: 3px solid #4dd0e1;
   cursor: pointer;
-  transition: transform 0.2s;
+  transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  width: 330px;
 }
 
-.found-animal-card:hover {
-  transform: scale(1.1);
-  background: #e0f7fa;
+.habitat-item:hover,
+.habitat-item:active {
+  transform: scale(1.06);
 }
 
-.animal-emoji {
-  font-size: 4rem;
+.image-wrapper {
+  width: 100%;
+  height: 270px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-bottom: 10px;
+  filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.15));
+}
+
+.habitat-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.habitat-name {
+  color: #004d40;
+  font-size: 1.5rem;
+  margin: 0;
+  font-weight: bold;
+  text-shadow: 1px 1px 0px #ffffff;
+  background: rgba(255, 255, 255, 0.75);
+  padding: 6px 18px;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.06);
+}
+
+/* =========================================================
+   GIAO DIỆN BÊN TRONG (MENU CON) - HÌNH TAM GIÁC PHÓNG TO
+   ========================================================= */
+.game-play-area {
+  width: 100%;
+  max-width: 1350px;
+  height: 75vh;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  padding: 0 30px;
+  box-sizing: border-box;
+  gap: 40px;
+}
+
+/* Bên trái: Ảnh khu vực cố định gọn gàng */
+.habitat-side-preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 5;
+  min-width: 300px;
+}
+
+.habitat-side-preview .image-wrapper.large-preview {
+  width: 300px;
+  height: 240px;
+}
+
+/* Bên phải: Bố cục hình tam giác chứa hình ảnh con vật siêu bự */
+.triangle-animals-layout {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  gap: 20px;
+}
+
+.triangle-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.top-row {
+  justify-content: space-around;
+  padding: 0 30px;
+}
+
+.bottom-row {
+  justify-content: center;
+}
+
+.slot-animal-item {
+  width: 230px;
+  height: 230px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.22));
+}
+
+.slot-animal-item:hover {
+  transform: scale(1.15) rotate(4deg);
+}
+
+.item-real-img {
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Hướng dẫn dưới cùng */
+.play-instruction {
+  position: absolute;
+  bottom: -45px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  background: rgba(255, 255, 255, 0.92);
+  padding: 14px 40px;
+  border-radius: 35px;
+  color: #006064;
+  font-size: 1.6rem;
+  font-weight: bold;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  border: 3px solid #b2ebf2;
+  white-space: nowrap;
+  z-index: 10;
+}
+
+/* Hiệu ứng nhún nhảy sinh động */
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+.animate-bounce {
+  animation: bounce 2.5s infinite ease-in-out;
+}
+
+/* RESPONSIVE CHO MÀN HÌNH DỌC / IPAD MINI */
+@media screen and (orientation: portrait), (max-width: 900px) {
+  .habitat-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    max-width: 650px;
+    margin: 0 auto;
+    justify-items: center;
+  }
+
+  .habitat-grid .habitat-item:nth-child(3) {
+    grid-column: span 2;
+    justify-self: center;
+  }
+
+  .habitat-item {
+    width: 270px;
+  }
+
+  .image-wrapper {
+    height: 200px;
+  }
+
+  .game-play-area {
+    flex-direction: column;
+    justify-content: flex-start;
+    height: auto;
+    padding: 10px;
+    gap: 15px;
+  }
+
+  .habitat-side-preview {
+    min-width: unset;
+    margin-bottom: 5px;
+  }
+
+  .habitat-side-preview .image-wrapper.large-preview {
+    width: 200px;
+    height: 150px;
+  }
+
+  .triangle-animals-layout {
+    width: 100%;
+    height: auto;
+    gap: 10px;
+  }
+
+  .top-row {
+    padding: 0;
+    gap: 15px;
+  }
+
+  .slot-animal-item {
+    width: 150px;
+    height: 150px;
+  }
+
+  .play-instruction {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    transform: none;
+    font-size: 1.15rem;
+    white-space: normal;
+    margin-top: 15px;
+  }
 }
 
 /* Hiệu ứng chuyển động */

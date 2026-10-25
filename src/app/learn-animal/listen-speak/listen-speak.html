@@ -1,1 +1,58 @@
-<p>listen-speak works!</p>
+<div class="listen-speak-container">
+  <!-- Nút Về Home cố định ở góc trái trên cùng, không bao giờ đè tiêu đề -->
+  <button class="home-btn" (click)="goHome()">
+    <span class="home-icon">🏠</span>
+    <span class="home-text">Home</span>
+  </button>
+
+  <!-- Tiêu đề hướng dẫn bé -->
+  <div class="header-section">
+    <h1 class="title">🌊 BÉ HÃY CHỌN MỘT KHU VỰC 🏡</h1>
+    <p class="subtitle">Bấm vào khu vực muốn khám phá nhé!</p>
+  </div>
+
+  <!-- Bố cục hình tam giác render từ const HABITATS -->
+  <div class="triangle-grid-layout">
+    <!-- Hàng trên: Lấy 2 phần tử đầu tiên (Index 0 và 1) -->
+    <div class="top-row">
+      @for (habitat of HABITATS.slice(0, 2); track habitat.id) {
+        <div
+          class="habitat-card"
+          [class.animate-bounce-slow]="selectedHabitatId !== habitat.id"
+          [class.selected-card]="selectedHabitatId === habitat.id"
+          (click)="selectHabitat(habitat)"
+        >
+          <div class="image-wrapper">
+            <img
+              [src]="selectedHabitatId === habitat.id ? habitat.gif : habitat.image"
+              [alt]="habitat.name"
+              class="habitat-img"
+            />
+          </div>
+          <div class="habitat-label">{{ habitat.name }}</div>
+        </div>
+      }
+    </div>
+
+    <!-- Hàng dưới: Lấy phần tử thứ 3 nằm chính giữa (Index từ 2) -->
+    <div class="bottom-row">
+      @for (habitat of HABITATS.slice(2, 3); track habitat.id) {
+        <div
+          class="habitat-card"
+          [class.animate-bounce-slow]="selectedHabitatId !== habitat.id"
+          [class.selected-card]="selectedHabitatId === habitat.id"
+          (click)="selectHabitat(habitat)"
+        >
+          <div class="image-wrapper">
+            <img
+              [src]="selectedHabitatId === habitat.id ? habitat.gif : habitat.image"
+              [alt]="habitat.name"
+              class="habitat-img"
+            />
+          </div>
+          <div class="habitat-label">{{ habitat.name }}</div>
+        </div>
+      }
+    </div>
+  </div>
+</div>

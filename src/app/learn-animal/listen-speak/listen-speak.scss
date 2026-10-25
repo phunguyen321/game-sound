@@ -1,0 +1,206 @@
+/* Container tổng thể màn hình */
+.listen-speak-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(135deg, #e0f7fa 0%, #80deea 100%);
+  font-family: 'Comic Sans MS', 'Arial', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  user-select: none;
+  box-sizing: border-box;
+  padding: 20px;
+}
+
+/* Nút Home chuẩn phong cách các màn hình học tập (Góc trái, gọn gàng, không đè tiêu đề) */
+.home-btn {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: #ffffff;
+  border: 3px solid #00acc1;
+  color: #00838f;
+  padding: 8px 16px;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 25px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition:
+    transform 0.2s,
+    background 0.2s;
+  z-index: 100;
+}
+
+.home-btn:hover {
+  background: #e0f7fa;
+  transform: scale(1.05);
+}
+
+.home-btn:active {
+  transform: scale(0.95);
+}
+
+/* Phần tiêu đề được đẩy khoảng cách chuẩn xác phía dưới */
+.header-section {
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.title {
+  color: #006064;
+  font-size: 2.4rem;
+  margin: 0 0 6px 0;
+  text-shadow: 2px 2px 0px #ffffff;
+}
+
+.subtitle {
+  color: #00838f;
+  font-size: 1.15rem;
+  margin: 0;
+  font-weight: bold;
+}
+
+/* Bố cục hình tam giác chính */
+.triangle-grid-layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  max-width: 1200px;
+}
+
+/* Hàng trên (2 phần tử) */
+.top-row {
+  display: flex;
+  justify-content: center;
+  gap: 80px;
+  width: 100%;
+}
+
+/* Hàng dưới (1 phần tử nằm giữa) */
+.bottom-row {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+/* Thẻ chứa mỗi khu vực */
+.habitat-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  width: 360px;
+}
+
+.habitat-card:hover {
+  transform: scale(1.05);
+}
+
+.habitat-card:active {
+  transform: scale(0.96);
+}
+
+/* HIỆU ỨNG KHI ĐƯỢC CHỌN: Phóng to rõ và tỏa sáng nhẹ */
+.selected-card {
+  transform: scale(1.12);
+  filter: drop-shadow(0 0 20px rgba(0, 188, 212, 0.9));
+}
+
+/* Khung chứa ảnh được nới rộng tối đa để hình/GIF hiển thị cực to */
+.image-wrapper {
+  width: 100%;
+  height: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+  filter: drop-shadow(0 12px 20px rgba(0, 0, 0, 0.18));
+}
+
+.habitat-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Nhãn tên khu vực gọn gàng phía dưới */
+.habitat-label {
+  background: rgba(255, 255, 255, 0.85);
+  color: #004d40;
+  font-size: 1.25rem;
+  font-weight: bold;
+  padding: 6px 20px;
+  border-radius: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  text-shadow: 1px 1px 0px #ffffff;
+  white-space: nowrap;
+}
+
+/* Hiệu ứng nhún nhảy nhẹ nhàng cho các thẻ chưa chọn */
+@keyframes bounceSlow {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.animate-bounce-slow {
+  animation: bounceSlow 3s infinite ease-in-out;
+}
+
+/* RESPONSIVE CHO IPAD MINI & MÀN HÌNH DỌC */
+@media screen and (orientation: portrait), (max-width: 900px) {
+  .home-btn {
+    top: 12px;
+    left: 12px;
+    padding: 6px 12px;
+    font-size: 0.9rem;
+  }
+
+  .header-section {
+    margin-top: 30px; /* Tạo khoảng trống vừa đủ để nút Home nhỏ gọn không bị vướng */
+  }
+
+  .title {
+    font-size: 1.6rem;
+  }
+
+  .subtitle {
+    font-size: 0.95rem;
+  }
+
+  .triangle-grid-layout {
+    gap: 12px;
+  }
+
+  .top-row {
+    gap: 20px;
+  }
+
+  .habitat-card {
+    width: 240px;
+  }
+
+  .image-wrapper {
+    height: 160px;
+  }
+
+  .habitat-label {
+    font-size: 0.95rem;
+    padding: 4px 12px;
+  }
+}
