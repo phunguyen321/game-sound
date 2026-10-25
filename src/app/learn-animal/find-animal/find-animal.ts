@@ -6,7 +6,7 @@ interface HabitatItem {
   id: string;
   name: string;
   image: string;
-  audio: string;     // Đường dẫn file MP3 (ví dụ: 'assets/audio/fish-1.mp3')
+  audio: string;    // Đường dẫn file MP3 của con vật
   soundText: string;
 }
 
@@ -14,13 +14,14 @@ interface Habitat {
   id: string;
   name: string;
   image: string;
+  introAudio: string; // Đường dẫn file MP3 intro riêng của khu vực
   hint: string;
   items: HabitatItem[];
 }
 
 @Component({
   selector: 'app-find-animal',
-  imports: [],
+  imports: [CommonModule], // Đảm bảo đã có CommonModule để chạy @if, @for
   templateUrl: './find-animal.html',
   styleUrl: './find-animal.scss',
 })
@@ -28,7 +29,7 @@ export class FindAnimal {
   selectedHabitatId = signal<string | null>(null);
   currentActiveHabitat: Habitat | null = null;
 
-  // Biến lưu trữ đối tượng âm thanh đang phát để có thể dừng lại khi cần
+  // Biến lưu trữ đối tượng âm thanh đang phát (intro hoặc âm thanh con vật)
   private currentAudio: HTMLAudioElement | null = null;
 
   router = inject(Router);
@@ -38,18 +39,19 @@ export class FindAnimal {
       id: 'lake',
       name: 'Cái Hồ Xanh Mát',
       image: '/images/ao_ca_remove.png',
+      introAudio: '/sounds/fish_part_1.m4a', // 🔊 File âm thanh intro của Hồ Xanh Mát
       hint: 'Bấm vào từng con cá bơi lội để phát ra âm thanh đúng nhé!',
       items: [
         { id: 'f1', name: 'Cá Hè', image: '/images/ca_1.png', audio: '/sounds/ting_exactly.mp3', soundText: 'Ủc ục ục!' },
         { id: 'f2', name: 'Cá Vàng', image: '/images/ca_2.png', audio: '/sounds/ting_exactly.mp3', soundText: 'Bơi tung tăng!' },
         { id: 'f3', name: 'Cá Nóc', image: '/images/ca_3.png', audio: '/sounds/ting_exactly.mp3', soundText: 'Ộp ộp ộp!' },
-
       ]
     },
     {
       id: 'chicken-nest',
       name: 'Ổ Trứng Gà',
       image: '/images/o_trung_ga_remove.png',
+      introAudio: '/sounds/chicken_part_1.m4a', // 🔊 File âm thanh intro của Ổ Trứng Gà
       hint: 'Bấm vào các chú gà hoặc quả trứng xem điều kỳ diệu!',
       items: [
         { id: 'c1', name: 'Gà Con', image: '/images/ga_1.png', audio: '/sounds/ting_exactly.mp3', soundText: 'Chíp chíp chíp!' },
@@ -61,6 +63,7 @@ export class FindAnimal {
       id: 'dog-house',
       name: 'Chuồng Chó Ấm Áp',
       image: '/images/chuong_cho_remove.png',
+      introAudio: '/sounds/dog_part_1.m4a', // 🔊 File âm thanh intro của Chuồng Chó Ấm Áp
       hint: 'Bấm vào cún con và đồ chơi xem bạn ấy làm gì nào!',
       items: [
         { id: 'd1', name: 'Cún Đốm', image: '/images/cho_1.png', audio: '/sounds/ting_exactly.mp3', soundText: 'Gâu gâu vẫy đuôi!' },
@@ -89,6 +92,11 @@ export class FindAnimal {
         ...found,
         items: selectedThree
       };
+
+      // 🔊 Tự động phát file âm thanh intro ngay khi vào khu vực này
+      if (found.introAudio) {
+        this.playAudio(found.introAudio);
+      }
     }
   }
 
@@ -103,20 +111,22 @@ export class FindAnimal {
     this.router.navigate(['/']);
   }
 
-  // Hàm xử lý phát âm thanh MP3
+  // Hàm xử lý phát âm thanh cho con vật (tự động ngắt tiếng intro/âm thanh trước đó)
   playItemSound(item: HabitatItem) {
-    // 1. Nếu đang có file âm thanh nào khác chạy, dừng và tua về 0 ngay lập tức
+    this.playAudio(item.audio);
+    console.log('Đang phát âm thanh con vật:', item.name);
+  }
+
+  // Hàm chung dùng để phát bất kỳ file audio nào và luôn ngắt audio đang chạy trước đó
+  private playAudio(audioPath: string) {
     this.stopCurrentAudio();
 
-    // 2. Tạo đối tượng Audio mới từ đường dẫn MP3 và tiến hành phát
-    if (item.audio) {
-      this.currentAudio = new Audio(item.audio);
+    if (audioPath) {
+      this.currentAudio = new Audio(audioPath);
       this.currentAudio.play().catch(err => {
-        console.warn('Không thể phát file âm thanh (có thể do đường dẫn chưa có):', err);
+        console.warn('Không thể phát file âm thanh:', err);
       });
     }
-
-    console.log('Đang phát âm thanh:', item.name);
   }
 
   private stopCurrentAudio() {

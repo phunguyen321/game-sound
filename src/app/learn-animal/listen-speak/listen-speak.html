@@ -1,8 +1,8 @@
 <div class="listen-speak-container">
-  <!-- Nút Về Home cố định ở góc trái trên cùng, không bao giờ đè tiêu đề -->
-  <button class="home-btn" (click)="goHome()">
-    <span class="home-icon">🏠</span>
-    <span class="home-text">Home</span>
+  <!-- Nút quay lại sinh động với icon và tiếng Việt thân thiện -->
+  <button class="back-btn animate-pulse-gentle" (click)="backToHome()">
+    <span class="btn-icon">{{ '🏠' }}</span>
+    <span class="btn-text">{{ 'Về trang chủ' }}</span>
   </button>
 
   <!-- Tiêu đề hướng dẫn bé -->

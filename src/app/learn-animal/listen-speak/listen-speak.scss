@@ -15,38 +15,6 @@
   padding: 20px;
 }
 
-/* Nút Home chuẩn phong cách các màn hình học tập (Góc trái, gọn gàng, không đè tiêu đề) */
-.home-btn {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  background: #ffffff;
-  border: 3px solid #00acc1;
-  color: #00838f;
-  padding: 8px 16px;
-  font-size: 1rem;
-  font-weight: bold;
-  border-radius: 25px;
-  cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  transition:
-    transform 0.2s,
-    background 0.2s;
-  z-index: 100;
-}
-
-.home-btn:hover {
-  background: #e0f7fa;
-  transform: scale(1.05);
-}
-
-.home-btn:active {
-  transform: scale(0.95);
-}
-
 /* Phần tiêu đề được đẩy khoảng cách chuẩn xác phía dưới */
 .header-section {
   text-align: center;
@@ -164,13 +132,6 @@
 
 /* RESPONSIVE CHO IPAD MINI & MÀN HÌNH DỌC */
 @media screen and (orientation: portrait), (max-width: 900px) {
-  .home-btn {
-    top: 12px;
-    left: 12px;
-    padding: 6px 12px;
-    font-size: 0.9rem;
-  }
-
   .header-section {
     margin-top: 30px; /* Tạo khoảng trống vừa đủ để nút Home nhỏ gọn không bị vướng */
   }
@@ -203,4 +164,56 @@
     font-size: 0.95rem;
     padding: 4px 12px;
   }
+}
+
+/* Nút quay lại sinh động, thân thiện với bé */
+.back-btn {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: linear-gradient(135deg, #ff9800 0%, #ff5722 100%);
+  color: #ffffff;
+  border: 4px solid #ffffff;
+  padding: 10px 22px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  font-family: 'Comic Sans MS', 'Arial', sans-serif;
+  border-radius: 40px;
+  cursor: pointer;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  z-index: 100;
+
+  .btn-icon {
+    font-size: 1.4rem;
+  }
+
+  &:hover {
+    transform: scale(1.08) translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+    background: linear-gradient(135deg, #ffa726 0%, #f4511e 100%);
+  }
+
+  &:active {
+    transform: scale(0.95);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+}
+
+/* Hiệu ứng nhịp đập nhẹ nhàng thu hút sự chú ý (tùy chọn) */
+@keyframes pulseGentle {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.03);
+  }
+}
+
+.animate-pulse-gentle {
+  animation: pulseGentle 3s infinite ease-in-out;
 }

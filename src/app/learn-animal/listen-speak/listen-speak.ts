@@ -86,7 +86,7 @@ export class ListenSpeak implements OnInit, OnDestroy {
     }
   }
 
-  goHome() {
+  backToHome() {
     this.stopCurrentAudio();
     this.stopAllAudio();
     this.selectedHabitatId = null;

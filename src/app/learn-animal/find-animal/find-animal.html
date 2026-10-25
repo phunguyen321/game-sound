@@ -1,7 +1,11 @@
 <div class="find-animal-container">
-  <!-- Nút quay lại -->
-  <button class="back-btn" (click)="selectedHabitatId() ? backToHabitats() : backToHome()">
-    ⬅️ {{ selectedHabitatId() ? 'Chọn Khu Vực Khác' : 'Về Menu Chính' }}
+  <!-- Nút quay lại sinh động với icon và tiếng Việt thân thiện -->
+  <button
+    class="back-btn animate-pulse-gentle"
+    (click)="selectedHabitatId() ? backToHabitats() : backToHome()"
+  >
+    <span class="btn-icon">{{ selectedHabitatId() ? '🏡' : '🏠' }}</span>
+    <span class="btn-text">{{ selectedHabitatId() ? 'Chọn nhà khác nào!' : 'Về trang chủ' }}</span>
   </button>
 
   <!-- MENU CHA -->
@@ -23,7 +27,7 @@
     </div>
   }
 
-  <!-- MENU CON BÊN TRONG (Hình tam giác: 2 trên, 1 dưới) -->
+  <!-- MENU CON BÊN TRONG -->
   @if (selectedHabitatId() && currentActiveHabitat) {
     <div class="game-play-area animate-fade-in">
       <!-- BÊN TRÁI: Ảnh khu vực thu nhỏ -->
