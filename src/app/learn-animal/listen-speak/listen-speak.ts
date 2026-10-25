@@ -31,15 +31,15 @@ export class ListenSpeak {
     {
       id: 'dog-house',
       name: 'Chuồng Chó Ấm Áp',
-      image: '/images/ao_ca_1.png',
-      gif: '/images/ca_boi.gif',
+      image: '/images/cho_vay_duoi.png',
+      gif: '/images/cho_vay_duoi_animated.gif',
       audio: '/sounds/audio_cho_sua.mp3'
     },
     {
       id: 'chicken-nest',
       name: 'Ổ Trứng Gà',
-      image: '/images/ao_ca_1.png',
-      gif: '/images/ca_boi.gif',
+      image: '/images/me_ga.png',
+      gif: '/images/me_ga_animated.gif',
       audio: '/sounds/audio_ga_gay.mp3'
     }
   ];

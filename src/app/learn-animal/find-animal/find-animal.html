@@ -7,7 +7,7 @@
   <!-- MENU CHA -->
   @if (!selectedHabitatId()) {
     <div class="habitat-selection animate-fade-in">
-      <h1 class="title">🌊 TRUY TÌM BẠN THÚ 🏡</h1>
+      <h1 class="title">🌊 HÀNH TRÌNH TÌM CON VẬT 🏡</h1>
       <p class="subtitle">Bé hãy chọn một nơi để xem ai đang trốn ở đó nhé!</p>
 
       <div class="habitat-grid">
@@ -26,11 +26,14 @@
   <!-- MENU CON BÊN TRONG (Hình tam giác: 2 trên, 1 dưới) -->
   @if (selectedHabitatId() && currentActiveHabitat) {
     <div class="game-play-area animate-fade-in">
-      
       <!-- BÊN TRÁI: Ảnh khu vực thu nhỏ -->
       <div class="habitat-side-preview">
         <div class="image-wrapper large-preview">
-          <img [src]="currentActiveHabitat.image" [alt]="currentActiveHabitat.name" class="habitat-img" />
+          <img
+            [src]="currentActiveHabitat.image"
+            [alt]="currentActiveHabitat.name"
+            class="habitat-img"
+          />
         </div>
         <h2 class="habitat-name">{{ currentActiveHabitat.name }}</h2>
       </div>
@@ -39,20 +42,41 @@
       <div class="triangle-animals-layout">
         <div class="triangle-row top-row">
           @if (currentActiveHabitat.items[0]) {
-            <div class="slot-animal-item animate-bounce" (click)="playItemSound(currentActiveHabitat.items[0])">
-              <img [src]="currentActiveHabitat.items[0].image" [alt]="currentActiveHabitat.items[0].name" class="item-real-img" />
+            <div
+              class="slot-animal-item animate-bounce"
+              (click)="playItemSound(currentActiveHabitat.items[0])"
+            >
+              <img
+                [src]="currentActiveHabitat.items[0].image"
+                [alt]="currentActiveHabitat.items[0].name"
+                class="item-real-img"
+              />
             </div>
           }
           @if (currentActiveHabitat.items[1]) {
-            <div class="slot-animal-item animate-bounce" (click)="playItemSound(currentActiveHabitat.items[1])">
-              <img [src]="currentActiveHabitat.items[1].image" [alt]="currentActiveHabitat.items[1].name" class="item-real-img" />
+            <div
+              class="slot-animal-item animate-bounce"
+              (click)="playItemSound(currentActiveHabitat.items[1])"
+            >
+              <img
+                [src]="currentActiveHabitat.items[1].image"
+                [alt]="currentActiveHabitat.items[1].name"
+                class="item-real-img"
+              />
             </div>
           }
         </div>
         <div class="triangle-row bottom-row">
           @if (currentActiveHabitat.items[2]) {
-            <div class="slot-animal-item animate-bounce" (click)="playItemSound(currentActiveHabitat.items[2])">
-              <img [src]="currentActiveHabitat.items[2].image" [alt]="currentActiveHabitat.items[2].name" class="item-real-img" />
+            <div
+              class="slot-animal-item animate-bounce"
+              (click)="playItemSound(currentActiveHabitat.items[2])"
+            >
+              <img
+                [src]="currentActiveHabitat.items[2].image"
+                [alt]="currentActiveHabitat.items[2].name"
+                class="item-real-img"
+              />
             </div>
           }
         </div>
@@ -62,7 +86,6 @@
       <div class="play-instruction">
         {{ currentActiveHabitat.hint }}
       </div>
-
     </div>
   }
 </div>

@@ -35,25 +35,34 @@
         <!-- Game 1: Hành trình tìm con vật -->
         <div class="game-card card-jungle" (click)="selectGame('find-animal')">
           <div class="card-badge">Thám hiểm</div>
-          <span class="game-icon">🔍🐘</span>
-          <h3>Hành Trình Tìm Con Vật</h3>
-          <p>Đi tìm các bạn động vật bị giấu trong rừng xanh!</p>
+          <div class="card-bg-wrapper">
+            <img src="/images/find_animal.png" alt="Hành trình tìm con vật" class="game-img" />
+          </div>
+          <div class="card-content">
+            <h3>Hành trình tìm con vật</h3>
+          </div>
         </div>
 
         <!-- Game 2: Nghe âm thanh tập nói -->
         <div class="game-card card-savannah" (click)="selectGame('listen-speak')">
           <div class="card-badge">Tập nói</div>
-          <span class="game-icon">🔊🗣️</span>
-          <h3>Nghe Âm Thanh Tập Nói</h3>
-          <p>Nghe tiếng kêu và học gọi tên các bạn thú!</p>
+          <div class="card-bg-wrapper">
+            <img src="/images/ga_menu.png" alt="Ai đang kêu đó" class="game-img" />
+          </div>
+          <div class="card-content">
+            <h3>Ai đang kêu đó</h3>
+          </div>
         </div>
 
         <!-- Game 3: Chạm vào vật để nghe -->
         <div class="game-card card-farm" (click)="selectGame('touch-listen')">
           <div class="card-badge">Tương tác</div>
-          <span class="game-icon">👉🐮</span>
-          <h3>Chạm & Khám Phá</h3>
-          <p>Chạm vào từng con vật để nghe tiếng kêu & câu chuyện!</p>
+          <div class="card-bg-wrapper">
+            <img src="/images/touch_listen.png" alt="Âm nhạc diệu kỳ" class="game-img" />
+          </div>
+          <div class="card-content">
+            <h3>Âm nhạc diệu kỳ</h3>
+          </div>
         </div>
       </div>
     </div>

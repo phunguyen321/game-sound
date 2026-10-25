@@ -11,16 +11,26 @@ export type GameType = 'find-animal' | 'listen-speak' | 'touch-listen';
   styleUrl: './home.scss',
 })
 export class Home {
-  // Inject Router theo chuẩn Angular hiện đại (dùng inject function)
   private router = inject(Router);
-  // Trạng thái màn hình
+
+  // Trạng thái màn hình (mặc định ban đầu có thể là welcome)
   screenState = signal<'welcome' | 'playing' | 'menu'>('welcome');
 
-  // Game đang được chọn
   selectedGame = signal<GameType | null>(null);
-
-  // Lấy thẻ video từ HTML
   introVideo = viewChild<ElementRef<HTMLVideoElement>>('introVideo');
+
+  ngOnInit() {
+    // Kiểm tra trong sessionStorage xem phiên làm việc này đã xem intro chưa
+    const hasSeenIntro = sessionStorage.getItem('hasSeenIntro');
+
+    if (hasSeenIntro === 'true') {
+      // Nếu đã xem rồi trong tab này -> Vào thẳng menu luôn
+      this.screenState.set('menu');
+    } else {
+      // Nếu chưa xem -> Giữ nguyên trạng thái 'welcome' ban đầu
+      this.screenState.set('welcome');
+    }
+  }
 
   startExperience() {
     this.screenState.set('playing');
@@ -39,6 +49,7 @@ export class Home {
   }
 
   onVideoEnded() {
+    this.markIntroAsWatched();
     this.screenState.set('menu');
   }
 
@@ -47,7 +58,13 @@ export class Home {
     if (videoEl) {
       videoEl.pause();
     }
+    this.markIntroAsWatched();
     this.screenState.set('menu');
+  }
+
+  // Đánh dấu đã xem intro vào sessionStorage của tab trình duyệt hiện tại
+  private markIntroAsWatched() {
+    sessionStorage.setItem('hasSeenIntro', 'true');
   }
 
   selectGame(game: GameType) {
