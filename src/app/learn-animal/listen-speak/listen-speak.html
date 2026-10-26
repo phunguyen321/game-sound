@@ -1,58 +1,60 @@
 <div class="listen-speak-container">
-  <!-- Nút quay lại sinh động với icon và tiếng Việt thân thiện -->
+  <!-- Nút quay lại sinh động ở góc trên -->
   <button class="back-btn animate-pulse-gentle" (click)="backToHome()">
-    <span class="btn-icon">{{ '🏠' }}</span>
-    <span class="btn-text">{{ 'Về trang chủ' }}</span>
+    <span class="btn-icon">🏠</span>
+    <span class="btn-text">Về trang chủ</span>
   </button>
 
-  <!-- Tiêu đề hướng dẫn bé -->
-  <div class="header-section">
-    <h1 class="title">🌊 AI ĐANG KÊU ĐÓ 🏡</h1>
-    <p class="subtitle">Bấm vào khu vực muốn khám phá nhé!</p>
-  </div>
-
-  <!-- Bố cục hình tam giác render từ const HABITATS -->
-  <div class="triangle-grid-layout">
-    <!-- Hàng trên: Lấy 2 phần tử đầu tiên (Index 0 và 1) -->
-    <div class="top-row">
-      @for (habitat of HABITATS.slice(0, 2); track habitat.id) {
-        <div
-          class="habitat-card"
-          [class.animate-bounce-slow]="selectedHabitatId !== habitat.id"
-          [class.selected-card]="selectedHabitatId === habitat.id"
-          (click)="selectHabitat(habitat)"
-        >
-          <div class="image-wrapper">
-            <img
-              [src]="selectedHabitatId === habitat.id ? habitat.gif : habitat.image"
-              [alt]="habitat.name"
-              class="habitat-img"
-            />
-          </div>
-          <div class="habitat-label">{{ habitat.name }}</div>
-        </div>
-      }
+  <!-- Khung chứa chung: Tiêu đề và nội dung nằm gọn trong này -->
+  <div class="main-content-wrapper">
+    <!-- Tiêu đề hướng dẫn bé (nằm sát ngay trên các thẻ card) -->
+    <div class="header-section">
+      <h1 class="title">🌊 AI ĐANG KÊU ĐÓ 🏡</h1>
     </div>
 
-    <!-- Hàng dưới: Lấy phần tử thứ 3 nằm chính giữa (Index từ 2) -->
-    <div class="bottom-row">
-      @for (habitat of HABITATS.slice(2, 3); track habitat.id) {
-        <div
-          class="habitat-card"
-          [class.animate-bounce-slow]="selectedHabitatId !== habitat.id"
-          [class.selected-card]="selectedHabitatId === habitat.id"
-          (click)="selectHabitat(habitat)"
-        >
-          <div class="image-wrapper">
-            <img
-              [src]="selectedHabitatId === habitat.id ? habitat.gif : habitat.image"
-              [alt]="habitat.name"
-              class="habitat-img"
-            />
+    <!-- Bố cục hình tam giác render từ const HABITATS -->
+    <div class="triangle-grid-layout">
+      <!-- Hàng trên: Lấy 2 phần tử đầu tiên (Index 0 và 1) -->
+      <div class="top-row">
+        @for (habitat of HABITATS.slice(0, 2); track habitat.id) {
+          <div
+            class="habitat-card"
+            [class.animate-bounce-slow]="selectedHabitatId !== habitat.id"
+            [class.selected-card]="selectedHabitatId === habitat.id"
+            (click)="selectHabitat(habitat)"
+          >
+            <div class="image-wrapper">
+              <img
+                [src]="selectedHabitatId === habitat.id ? habitat.gif : habitat.image"
+                [alt]="habitat.name"
+                class="habitat-img"
+              />
+            </div>
+            <div class="habitat-label">{{ habitat.name }}</div>
           </div>
-          <div class="habitat-label">{{ habitat.name }}</div>
-        </div>
-      }
+        }
+      </div>
+
+      <!-- Hàng dưới: Lấy phần tử thứ 3 nằm chính giữa (Index từ 2) -->
+      <div class="bottom-row">
+        @for (habitat of HABITATS.slice(2, 3); track habitat.id) {
+          <div
+            class="habitat-card"
+            [class.animate-bounce-slow]="selectedHabitatId !== habitat.id"
+            [class.selected-card]="selectedHabitatId === habitat.id"
+            (click)="selectHabitat(habitat)"
+          >
+            <div class="image-wrapper">
+              <img
+                [src]="selectedHabitatId === habitat.id ? habitat.gif : habitat.image"
+                [alt]="habitat.name"
+                class="habitat-img"
+              />
+            </div>
+            <div class="habitat-label">{{ habitat.name }}</div>
+          </div>
+        }
+      </div>
     </div>
   </div>
 </div>

@@ -202,7 +202,9 @@
   animation: bounce 2.5s infinite ease-in-out;
 }
 
-/* RESPONSIVE CHO MÀN HÌNH DỌC / IPAD MINI */
+/* =========================================================
+   RESPONSIVE CHO MÀN HÌNH DỌC / IPAD MINI (ĐÃ PHÓNG TO TOÀN BỘ)
+   ========================================================= */
 @media screen and (orientation: portrait), (max-width: 900px) {
   .habitat-grid {
     display: grid;
@@ -223,7 +225,7 @@
   }
 
   .image-wrapper {
-    height: 200px;
+    height: 180px;
   }
 
   .game-play-area {
@@ -231,33 +233,41 @@
     justify-content: flex-start;
     height: auto;
     padding: 10px;
-    gap: 15px;
+    gap: 12px;
   }
 
+  /* Phóng to ảnh khu vực xem trước (preview) ở màn hình dọc */
   .habitat-side-preview {
     min-width: unset;
     margin-bottom: 5px;
   }
 
   .habitat-side-preview .image-wrapper.large-preview {
-    width: 200px;
-    height: 150px;
+    width: 240px;
+    height: 180px;
+    margin-bottom: 6px;
+  }
+
+  .habitat-side-preview .habitat-name {
+    font-size: 1.25rem;
+    padding: 5px 16px;
   }
 
   .triangle-animals-layout {
     width: 100%;
     height: auto;
-    gap: 10px;
+    gap: 12px;
   }
 
   .top-row {
     padding: 0;
-    gap: 15px;
+    gap: 25px;
   }
 
+  /* Phóng to hẳn các chú động vật ở màn hình dọc cho thật bự và dễ bấm */
   .slot-animal-item {
-    width: 150px;
-    height: 150px;
+    width: 205px;
+    height: 205px;
   }
 
   .play-instruction {
@@ -265,9 +275,10 @@
     bottom: auto;
     left: auto;
     transform: none;
-    font-size: 1.15rem;
+    font-size: 1.05rem;
     white-space: normal;
-    margin-top: 15px;
+    margin-top: 10px;
+    padding: 10px 20px;
   }
 }
 
@@ -324,7 +335,7 @@
   }
 }
 
-/* Hiệu ứng nhịp đập nhẹ nhàng thu hút sự chú ý (tùy chọn) */
+/* Hiệu ứng nhịp đập nhẹ nhàng thu hút sự chú ý */
 @keyframes pulseGentle {
   0%,
   100% {

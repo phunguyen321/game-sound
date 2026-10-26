@@ -15,25 +15,28 @@
   padding: 20px;
 }
 
-/* Phần tiêu đề được đẩy khoảng cách chuẩn xác phía dưới */
+/* Khung gom chung tiêu đề và các card */
+.main-content-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 1500px;
+  gap: 25px; /* Khoảng cách vừa phải để chừa chỗ cho ảnh bự */
+}
+
+/* Phần tiêu đề */
 .header-section {
   text-align: center;
-  margin-top: 10px;
-  margin-bottom: 20px;
+  margin: 0;
+  flex-shrink: 0;
 }
 
 .title {
   color: #006064;
-  font-size: 2.4rem;
-  margin: 0 0 6px 0;
-  text-shadow: 2px 2px 0px #ffffff;
-}
-
-.subtitle {
-  color: #00838f;
-  font-size: 1.15rem;
+  font-size: clamp(2rem, 3.8vw, 3rem); /* Tiêu đề to rõ, sinh động */
   margin: 0;
-  font-weight: bold;
+  text-shadow: 2px 2px 0px #ffffff;
 }
 
 /* Bố cục hình tam giác chính */
@@ -41,16 +44,15 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
+  gap: 25px;
   width: 100%;
-  max-width: 1200px;
 }
 
 /* Hàng trên (2 phần tử) */
 .top-row {
   display: flex;
   justify-content: center;
-  gap: 80px;
+  gap: 8vw; /* Khoảng cách rộng rãi cho màn hình ngang */
   width: 100%;
 }
 
@@ -61,14 +63,16 @@
   width: 100%;
 }
 
-/* Thẻ chứa mỗi khu vực */
+/* Thẻ chứa mỗi khu vực: BUNG TO HẾT CỠ ở màn hình ngang */
 .habitat-card {
   display: flex;
   flex-direction: column;
   align-items: center;
   cursor: pointer;
   transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  width: 360px;
+  width: 36vw; /* Mở rộng chiều ngang card */
+  max-width: 480px; /* Cho phép card cực lớn trên màn hình to */
+  min-width: 300px;
 }
 
 .habitat-card:hover {
@@ -79,21 +83,23 @@
   transform: scale(0.96);
 }
 
-/* HIỆU ỨNG KHI ĐƯỢC CHỌN: Phóng to rõ và tỏa sáng nhẹ */
+/* HIỆU ỨNG KHI ĐƯỢC CHỌN: Phóng to và tỏa sáng mạnh mẽ */
 .selected-card {
   transform: scale(1.12);
-  filter: drop-shadow(0 0 20px rgba(0, 188, 212, 0.9));
+  filter: drop-shadow(0 0 30px rgba(0, 188, 212, 1));
+  z-index: 5;
 }
 
-/* Khung chứa ảnh được nới rộng tối đa để hình/GIF hiển thị cực to */
+/* Khung chứa ảnh: BUNG CỰC KỲ TO RÕ ở chế độ ngang */
 .image-wrapper {
   width: 100%;
-  height: 250px;
+  height: 36vh; /* Tăng chiều cao khung chứa ảnh lên 36% màn hình */
+  max-height: 380px;
+  min-height: 200px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 10px;
-  filter: drop-shadow(0 12px 20px rgba(0, 0, 0, 0.18));
+  filter: drop-shadow(0 12px 22px rgba(0, 0, 0, 0.18));
 }
 
 .habitat-img {
@@ -102,20 +108,20 @@
   object-fit: contain;
 }
 
-/* Nhãn tên khu vực gọn gàng phía dưới */
+/* Nhãn tên khu vực to rõ tương ứng */
 .habitat-label {
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.95);
   color: #004d40;
-  font-size: 1.25rem;
+  font-size: clamp(1.1rem, 2.2vw, 1.5rem);
   font-weight: bold;
-  padding: 6px 20px;
-  border-radius: 20px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  padding: 8px 24px;
+  border-radius: 25px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
   text-shadow: 1px 1px 0px #ffffff;
   white-space: nowrap;
 }
 
-/* Hiệu ứng nhún nhảy nhẹ nhàng cho các thẻ chưa chọn */
+/* Hiệu ứng nhún nhảy */
 @keyframes bounceSlow {
   0%,
   100% {
@@ -130,18 +136,15 @@
   animation: bounceSlow 3s infinite ease-in-out;
 }
 
-/* RESPONSIVE CHO IPAD MINI & MÀN HÌNH DỌC */
+/* CHỈ THU NHỎ KHI XQ MÀN HÌNH DỌC (PORTRAIT) HOẶC THIẾT BỊ HẸP */
 @media screen and (orientation: portrait), (max-width: 900px) {
-  .header-section {
-    margin-top: 30px; /* Tạo khoảng trống vừa đủ để nút Home nhỏ gọn không bị vướng */
+  .main-content-wrapper {
+    gap: 60px;
+    margin-top: 40px;
   }
 
   .title {
     font-size: 1.6rem;
-  }
-
-  .subtitle {
-    font-size: 0.95rem;
   }
 
   .triangle-grid-layout {
@@ -153,11 +156,15 @@
   }
 
   .habitat-card {
-    width: 240px;
+    width: 42vw;
+    max-width: 280px;
+    min-width: 200px;
   }
 
   .image-wrapper {
-    height: 160px;
+    height: 18vh;
+    max-height: 200px;
+    min-height: 120px;
   }
 
   .habitat-label {
@@ -166,16 +173,16 @@
   }
 }
 
-/* Nút quay lại sinh động, thân thiện với bé */
+/* Nút quay lại */
 .back-btn {
   position: absolute;
-  top: 20px;
-  left: 20px;
+  top: 15px;
+  left: 15px;
   background: linear-gradient(135deg, #ff9800 0%, #ff5722 100%);
   color: #ffffff;
   border: 4px solid #ffffff;
-  padding: 10px 22px;
-  font-size: 1.2rem;
+  padding: 8px 18px;
+  font-size: 1.1rem;
   font-weight: bold;
   font-family: 'Comic Sans MS', 'Arial', sans-serif;
   border-radius: 40px;
@@ -188,7 +195,7 @@
   z-index: 100;
 
   .btn-icon {
-    font-size: 1.4rem;
+    font-size: 1.3rem;
   }
 
   &:hover {
@@ -203,7 +210,6 @@
   }
 }
 
-/* Hiệu ứng nhịp đập nhẹ nhàng thu hút sự chú ý (tùy chọn) */
 @keyframes pulseGentle {
   0%,
   100% {
@@ -216,4 +222,101 @@
 
 .animate-pulse-gentle {
   animation: pulseGentle 3s infinite ease-in-out;
+}
+
+/* Nhãn tên khu vực (Mặc định cho màn hình ngang sẽ đẩy sát lên ảnh) */
+.habitat-label {
+  background: rgba(255, 255, 255, 0.95);
+  color: #004d40;
+  font-size: clamp(1.1rem, 2.2vw, 1.5rem);
+  font-weight: bold;
+  padding: 8px 24px;
+  border-radius: 25px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  text-shadow: 1px 1px 0px #ffffff;
+  white-space: nowrap;
+  margin-top: -20px; /* 👈 Kéo nhãn tên dịch lên sát hình ảnh ở màn hình ngang */
+  z-index: 2;
+}
+
+/* CHỈ THU NHỎ VÀ ĐIỀU CHỈNH KHI XOAY MÀN HÌNH DỌC (PORTRAIT) HOẶC THIẾT BỊ HẸP */
+@media screen and (orientation: portrait), (max-width: 900px) {
+  .main-content-wrapper {
+    gap: 15px;
+    margin-top: 40px;
+  }
+
+  .title {
+    font-size: 1.6rem;
+  }
+
+  .triangle-grid-layout {
+    gap: 12px;
+  }
+
+  .top-row {
+    gap: 20px;
+  }
+
+  .habitat-card {
+    width: 42vw;
+    max-width: 280px;
+    min-width: 200px;
+  }
+
+  .image-wrapper {
+    height: 18vh;
+    max-height: 200px;
+    min-height: 120px;
+  }
+
+  .habitat-label {
+    font-size: 0.95rem;
+    padding: 4px 12px;
+    margin-top: 0px; /* 👈 Reset lại margin-top về 0 cho màn hình dọc để tránh bị đè sát quá */
+  }
+}
+
+/* CHỈNH SỬA RIÊNG CHO MÀN HÌNH DỌC (PORTRAIT) ĐỂ ẢNH TO VÀ THOÁNG ĐÃNG HƠN */
+@media screen and (orientation: portrait), (max-width: 900px) {
+  .listen-speak-container {
+    padding: 20px 10px;
+    justify-content: space-evenly; /* Phân bổ không gian đều khắp màn hình dọc */
+  }
+
+  .main-content-wrapper {
+    gap: 25px; /* 👈 Tăng khoảng cách giữa tiêu đề và cụm card cho thoáng */
+    margin-top: 45px;
+  }
+
+  .title {
+    font-size: 1.8rem;
+  }
+
+  .triangle-grid-layout {
+    gap: 25px; /* 👈 Tăng khoảng cách giữa hàng trên và hàng dưới để không bị sát nhau */
+    width: 100%;
+  }
+
+  .top-row {
+    gap: 25px; /* 👈 Tăng khoảng cách giữa 2 card ở hàng trên */
+  }
+
+  .habitat-card {
+    width: 46vw; /* 👈 Mở rộng bề ngang card để tận dụng không gian dọc */
+    max-width: 340px;
+    min-width: 230px;
+  }
+
+  .image-wrapper {
+    height: 26vh; /* 👈 Phóng to chiều cao khung ảnh (từ 18vh lên 26vh) giúp hình/GIF to rõ */
+    max-height: 280px;
+    min-height: 160px;
+  }
+
+  .habitat-label {
+    font-size: 1.1rem;
+    padding: 6px 16px;
+    margin-top: -5px; /* Giúp nhãn tên bám sát ảnh vừa phải ở màn hình dọc */
+  }
 }

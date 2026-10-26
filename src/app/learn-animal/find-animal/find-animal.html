@@ -12,7 +12,6 @@
   @if (!selectedHabitatId()) {
     <div class="habitat-selection animate-fade-in">
       <h1 class="title">🌊 HÀNH TRÌNH TÌM CON VẬT 🏡</h1>
-      <p class="subtitle">Bé hãy chọn một nơi để xem ai đang trốn ở đó nhé!</p>
 
       <div class="habitat-grid">
         @for (item of habitats; track item.id) {
@@ -84,11 +83,6 @@
             </div>
           }
         </div>
-      </div>
-
-      <!-- HƯỚNG DẪN DƯỚI CÙNG -->
-      <div class="play-instruction">
-        {{ currentActiveHabitat.hint }}
       </div>
     </div>
   }
